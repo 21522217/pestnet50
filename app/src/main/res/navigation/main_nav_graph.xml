@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <!-- Home Screen -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.vn.uit.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <!-- Camera Fragment -->
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.vn.uit.ui.home.CameraFragment"
+        android:label="Camera"
+        tools:layout="@layout/fragment_camera">
+        <action
+            android:id="@+id/action_cameraFragment_to_imageEditorFragment"
+            app:destination="@id/imageEditorFragment" />
+        <action
+            android:id="@+id/action_cameraFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageEditorFragment"
+        android:name="com.vn.uit.ui.home.ImageEditorFragment"
+        android:label="Image Editor"
+        tools:layout="@layout/fragment_image_editor">
+        <action
+            android:id="@+id/action_imageEditorFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+
+    <!-- Result Fragment -->
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.vn.uit.ui.home.ResultFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_result">
+        <action
+            android:id="@+id/action_resultFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Gallery Screen -->
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.vn.uit.ui.gallery.GalleryFragment"
+        android:label="Gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_imageEditorFragment"
+            app:destination="@id/imageEditorFragment" />
+    </fragment>
+
+    <!-- Slideshow/Settings Screen -->
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.vn.uit.ui.slideshow.SlideshowFragment"
+        android:label="Slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <!-- Gallery Fragment from Camera flow -->
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.vn.uit.ui.gallery.GalleryFragment"
+        android:label="Gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_imageEditorFragment"
+            app:destination="@id/imageEditorFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- General Settings -->
+    <PreferenceCategory
+        android:title="General Settings">
+
+        <CheckBoxPreference
+            android:key="notifications"
+            android:title="Enable Notifications"
+            android:summary="Receive notifications from the app"
+            android:defaultValue="true" />
+
+        <EditTextPreference
+            android:key="language"
+            android:title="App Language"
+            android:summary="Set the language of the app"
+            android:defaultValue="English"
+            android:inputType="text"
+            android:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <!-- About Us Section -->
+    <PreferenceCategory
+        android:title="About Us">
+        <Preference
+            android:key="about_us"
+            android:title="About Pest Classification App"
+            android:summary="Version: 1.0\nCompany: XYZ Corp\nDeveloped by: Your Name"
+            android:enabled="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
