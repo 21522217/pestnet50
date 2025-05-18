@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PestNet"
+rootProject.name = "pestnet"
 include(":app")
  

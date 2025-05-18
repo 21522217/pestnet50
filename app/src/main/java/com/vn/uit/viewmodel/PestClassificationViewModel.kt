@@ -1,5 +1,6 @@
 package com.vn.uit.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.ContentValues
 import android.graphics.Bitmap
@@ -37,6 +38,7 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
     private val _detectedPestName = MutableLiveData<String>()
     val detectedPestName: LiveData<String> = _detectedPestName
 
+    @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
 
     private val pestClassifier: PestClassifier by lazy {
@@ -134,7 +136,7 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
                 val maxIndex = outputProbabilities.indices.maxByOrNull { outputProbabilities[it] } ?: -1
 
                 if (maxIndex != -1 && maxIndex < pestLabels.size) {
-                    val confidenceThreshold = 0.5f
+                    val confidenceThreshold = 0.8f
                     val maxConfidence = outputProbabilities[maxIndex]
 
                     if (maxConfidence >= confidenceThreshold) {

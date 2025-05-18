@@ -3,31 +3,42 @@
 
     <!-- General Settings -->
     <PreferenceCategory
-        android:title="General Settings">
+        android:title="@string/general_settings">
 
         <CheckBoxPreference
             android:key="notifications"
-            android:title="Enable Notifications"
-            android:summary="Receive notifications from the app"
+            android:title="@string/enable_notifications"
+            android:summary="@string/receive_notifications"
             android:defaultValue="true" />
 
-        <EditTextPreference
+        <PreferenceCategory android:title="@string/appearance_settings">
+            <ListPreference
+                android:defaultValue="system"
+                android:entries="@array/theme_entries"
+                android:entryValues="@array/theme_values"
+                android:key="theme"
+                android:summary="@string/theme_summary"
+                android:title="@string/theme_title" />
+        </PreferenceCategory>
+
+        <ListPreference
             android:key="language"
-            android:title="App Language"
-            android:summary="Set the language of the app"
-            android:defaultValue="English"
-            android:inputType="text"
+            android:title="@string/app_language"
+            android:summary="@string/set_language"
+            android:defaultValue="en"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
             android:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
     <!-- About Us Section -->
     <PreferenceCategory
-        android:title="About Us">
+        android:title="@string/about_us">
         <Preference
             android:key="about_us"
-            android:title="About Pest Classification App"
-            android:summary="Version: 1.0\nCompany: XYZ Corp\nDeveloped by: Your Name"
+            android:title="@string/about_app_title"
+            android:summary="@string/about_app_summary"
             android:enabled="false" />
     </PreferenceCategory>
 

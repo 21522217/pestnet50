@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.Pestnet" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- Base application theme for night/dark mode -->
+    <style name="Theme.PestClassification" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -11,6 +12,26 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <!-- Custom attributes -->
+        <item name="backgroundColor">@color/background_dark</item>
+        <item name="cardBackgroundColor">@color/card_background_dark</item>
+        <item name="textColorPrimary">@color/text_primary_dark</item>
+        <item name="textColorSecondary">@color/text_secondary_dark</item>
+
+        <!-- No Action Bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PestClassification.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="Theme.PestClassification.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <!-- Theme for camera screens - fullscreen, no status bar or navigation -->
+    <style name="Theme.PestClassification.Camera" parent="Theme.PestClassification">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">导航头部</string>
+    <string name="action_settings">设置</string>
+
+    <string name="login">登录</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login_title">登录 PESTNET</string>
+    <string name="username_hint">请输入用户名…</string>
+    <string name="password_hint">请输入密码…</string>
+    <string name="remember_me">记住我</string>
+    <string name="forgot_password">忘记密码？</string>
+    <string name="continue_with_google">使用 Google 登录</string>
+    <string name="continue_with_facebook">使用 Facebook 登录</string>
+    <string name="continue_with_others">使用其他方式登录</string>
+    <string name="terms_and_privacy">条款与隐私</string>
+    <string name="copyright">2025©版权</string>
+    <string name="or">或</string>
+    <string name="dontHaveAnAccountPleaseSignup">Don\'t have an account? Please signup</string>
+
+    <string name="signup_title">SIGN UP</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Please enter your email</string>
+    <string name="confirm_password_hint">Confirm your password</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <string name="menu_home">首页</string>
+    <string name="menu_gallery">图库</string>
+    <string name="menu_slideshow">幻灯片</string>
+    <string name="sign_up">注册</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="already_have_an_account_log_in">已有账号？登录</string>
+    <string name="open_camera">打开相机</string>
+    <string name="toggle_flash">切换闪光灯</string>
+    <string name="take_picture">拍照</string>
+    <string name="apply_edit">应用编辑</string>
+    <string name="save_image">保存图片</string>
+    <string name="image_preview">图片预览</string>
+    <string name="dynamic_duo">强强组合</string>
+    <string name="result_will_appear_here">结果将在此处显示</string>
+    <string name="no_images_found">未找到图片</string>
+    <string name="take_photo">拍照</string>
+    <string name="open_gallery">打开图库</string>
+    <string name="pest_occurrences">害虫出现次数：%d</string>
+
+    <!-- General -->
+    <string name="app_name">病虫害分类</string>
+
+    <!-- Settings -->
+    <string name="general_settings">常规设置</string>
+    <string name="enable_notifications">启用通知</string>
+    <string name="receive_notifications">接收应用通知</string>
+    <string name="app_language">应用语言</string>
+    <string name="set_language">设置应用语言</string>
+
+    <!-- About Us -->
+    <string name="about_us">关于我们</string>
+    <string name="about_app_title">关于病虫害分类应用</string>
+    <string name="about_app_summary">版本: 1.0\\n公司: XYZ Corp\\n开发者: 您的名字</string>
+    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">关于我们\\n\\n应用版本: 1.0\\n公司: XYZ Corp\\n开发者: 您的名字</string>
+
+    <string name="app_theme">Theme</string>
+    <string name="set_theme">Choose app theme</string>
+
+    <string name="appearance_settings">Appearance</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_summary">Set the app theme</string>
+
+    <string-array name="theme_entries">
+        <item>System default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+</resources>
+
+
+
+

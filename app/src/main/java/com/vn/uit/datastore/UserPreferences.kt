@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,8 @@ class UserPreferences(private val context: Context) {
 
     companion object {
         val TOKEN_KEY = stringPreferencesKey("auth_token")
-        val USER_ID_KEY = intPreferencesKey("user_id")
+        val USER_ID_KEY = longPreferencesKey("user_id")
+        private val USERNAME_KEY = stringPreferencesKey("username")
     }
 
     /**
@@ -28,12 +30,29 @@ class UserPreferences(private val context: Context) {
             preferences[TOKEN_KEY] = token
         }
     }
+    suspend fun saveUsername(username: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USERNAME_KEY] = username
+        }
+    }
+
 
     /**
      * Save user ID to preferences
      */
-    suspend fun saveUserId(userId: Int) {
+    suspend fun saveUserId(userId: Long) {
         context.dataStore.edit { preferences ->
+            preferences[USER_ID_KEY] = userId
+        }
+    }
+
+    /**
+     * Save both token and userId in a single transaction
+     * This helps avoid multiple navigation graph changes
+     */
+    suspend fun saveUserData(token: String, userId: Long) {
+        context.dataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = token
             preferences[USER_ID_KEY] = userId
         }
     }
@@ -50,7 +69,7 @@ class UserPreferences(private val context: Context) {
     /**
      * Get the user ID as a Flow
      */
-    fun getUserId(): Flow<Int?> {
+    fun getUserId(): Flow<Long?> {
         return context.dataStore.data.map { preferences ->
             preferences[USER_ID_KEY]
         }

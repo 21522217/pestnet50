@@ -11,5 +11,5 @@ data class AuthResponse(
 
 data class AuthData(
     val token: String,
-    val userId: Int
+    val userId: Long
 )

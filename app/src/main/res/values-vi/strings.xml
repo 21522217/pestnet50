@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
+    <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Tiêu đề điều hướng</string>
+    <string name="action_settings">Cài đặt</string>
+
+    <string name="login">Đăng nhập</string>
+    <string name="username">Tên người dùng</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login_title">ĐĂNG NHẬP PESTNET</string>
+    <string name="username_hint">Vui lòng nhập tên người dùng…</string>
+    <string name="password_hint">Vui lòng nhập mật khẩu…</string>
+    <string name="remember_me">Ghi nhớ đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="continue_with_google">Tiếp tục với Google</string>
+    <string name="continue_with_facebook">Tiếp tục với Facebook</string>
+    <string name="continue_with_others">Tiếp tục với các phương thức khác</string>
+    <string name="terms_and_privacy">Điều khoản và Chính sách</string>
+    <string name="copyright">2025©Bản quyền</string>
+    <string name="or">hoặc</string>
+    <string name="dontHaveAnAccountPleaseSignup">Don\'t have an account? Please signup</string>
+
+    <string name="signup_title">SIGN UP</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Please enter your email</string>
+    <string name="confirm_password_hint">Confirm your password</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_gallery">Thư viện</string>
+    <string name="menu_slideshow">Trình chiếu</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="already_have_an_account_log_in">Đã có tài khoản? Đăng nhập</string>
+    <string name="open_camera">Mở máy ảnh</string>
+    <string name="toggle_flash">Bật/Tắt đèn flash</string>
+    <string name="take_picture">Chụp ảnh</string>
+    <string name="apply_edit">Áp dụng chỉnh sửa</string>
+    <string name="save_image">Lưu ảnh</string>
+    <string name="image_preview">Xem trước ảnh</string>
+    <string name="dynamic_duo">Bộ đôi hoàn hảo</string>
+    <string name="result_will_appear_here">Kết quả sẽ hiển thị ở đây</string>
+    <string name="no_images_found">Không tìm thấy ảnh nào</string>
+    <string name="take_photo">Chụp ảnh</string>
+    <string name="open_gallery">Mở thư viện</string>
+    <string name="pest_occurrences">Số lần phát hiện sâu bệnh: %d</string>
+
+    <!-- General -->
+    <string name="app_name">Phân Loại Sâu Bệnh</string>
+
+    <!-- Settings -->
+    <string name="general_settings">Cài Đặt Chung</string>
+    <string name="enable_notifications">Bật Thông Báo</string>
+    <string name="receive_notifications">Nhận thông báo từ ứng dụng</string>
+    <string name="app_language">Ngôn Ngữ Ứng Dụng</string>
+    <string name="set_language">Đặt ngôn ngữ của ứng dụng</string>
+
+    <!-- About Us -->
+    <string name="about_us">Về Chúng Tôi</string>
+    <string name="about_app_title">Về Ứng Dụng Phân Loại Sâu Bệnh</string>
+    <string name="about_app_summary">Phiên bản: 1.0\\nCông ty: XYZ Corp\\nPhát triển bởi: Tên Của Bạn</string>
+    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">Về Chúng Tôi\\n\\nPhiên bản: 1.0\\nCông ty: XYZ Corp\\nPhát triển bởi: Tên Của Bạn</string>
+
+    <string name="app_theme">Theme</string>
+    <string name="set_theme">Choose app theme</string>
+
+    <string name="appearance_settings">Appearance</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_summary">Set the app theme</string>
+
+    <string-array name="theme_entries">
+        <item>System default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+</resources>

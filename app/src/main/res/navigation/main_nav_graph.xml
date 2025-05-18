@@ -69,10 +69,10 @@
 
     <!-- Slideshow/Settings Screen -->
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.vn.uit.ui.slideshow.SlideshowFragment"
-        android:label="Slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_settings"
+        android:name="com.vn.uit.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
 
     <!-- Gallery Fragment from Camera flow -->
     <fragment
@@ -83,5 +83,13 @@
         <action
             android:id="@+id/action_galleryFragment_to_imageEditorFragment"
             app:destination="@id/imageEditorFragment" />
+    </fragment>
+
+    <!-- Gallery Screen -->
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.vn.uit.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history">
     </fragment>
 </navigation>
