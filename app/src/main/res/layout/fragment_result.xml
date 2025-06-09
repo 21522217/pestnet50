@@ -1,132 +1,306 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.home.ResultFragment">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/resultImageView"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+            <!-- Image Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/imageCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                app:cardUseCompatPadding="true"
+                app:strokeColor="@color/outline_dark"
+                app:strokeWidth="1dp"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/resultTitleTextDetected"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/resultImageView"
+                        android:layout_width="0dp"
+                        android:layout_height="280dp"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/detected_pest_image"
+                        android:background="@color/surface_dark"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/confidence_badge_background"
+                        android:backgroundTint="@color/primary"
+                        android:padding="12dp"
+                        android:layout_margin="16dp"
+                        android:elevation="2dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/confidenceTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:drawablePadding="4dp"
+                            tools:text="95% Confidence"
+                            app:drawableStartCompat="@drawable/ic_check_circle" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Identification Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/identificationCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:strokeColor="@color/secondary"
+                app:strokeWidth="1dp"
+                app:layout_constraintTop_toBottomOf="@id/imageCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/resultTitleTextDetected"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detected_pest"
+                        android:textSize="16sp"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:drawableStartCompat="@drawable/ic_bug"
+                        app:drawableTint="@color/primary" />
+
+                    <TextView
+                        android:id="@+id/pestNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        app:layout_constraintTop_toBottomOf="@id/resultTitleTextDetected"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Brown Plant Hopper" />
+
+                    <TextView
+                        android:id="@+id/scientificNameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintTop_toBottomOf="@id/pestNameTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Nilaparvata lugens" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/regionsChipGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:chipSpacingHorizontal="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/scientificNameTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/learnMoreButton"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/learn_more"
+                        android:backgroundTint="@color/secondary"
+                        android:textColor="@color/white"
+                        app:icon="@drawable/ic_open_in_browser"
+                        app:iconTint="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/regionsChipGroup"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Treatment Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/treatmentCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:strokeColor="@color/accent_green"
+                app:strokeWidth="2dp"
+                app:layout_constraintTop_toBottomOf="@id/identificationCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/treatmentTitleTextPest"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/treatment_options"
+                        android:textSize="16sp"
+                        android:textColor="@color/accent_green"
+                        android:textStyle="bold"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:drawableStartCompat="@drawable/ic_medical_service"
+                        app:drawableTint="@color/accent_green" />
+
+                    <TextView
+                        android:id="@+id/treatmentTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/on_surface_dark"
+                        app:layout_constraintTop_toBottomOf="@id/treatmentTitleTextPest"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="1. Chemical control: Use pesticides containing X, Y, Z\n2. Biological control: Introduce natural predators\n3. Cultural practices: Adjust planting time and spacing" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Insecticides Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/insecticidesCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="1dp"
+                app:layout_constraintTop_toBottomOf="@id/treatmentCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/insecticideTitleText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/recommended_insecticides"
+                        android:textSize="16sp"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:drawableStartCompat="@drawable/ic_science"
+                        app:drawableTint="@color/primary" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/insecticidesRecyclerView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@id/insecticideTitleText"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Buttons -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shareResultButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Detected Pest:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/share_results"
+                android:backgroundTint="@color/buttonBackground"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_share"
+                app:iconTint="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/insecticidesCard"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultImageView" />
+                app:layout_constraintEnd_toStartOf="@id/newScanButton"
+                app:layout_constraintWidth_percent="0.48" />
 
-            <TextView
-                android:id="@+id/pestNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultTitleTextDetected"
-                tools:text="Brown Plant Hopper" />
-
-            <TextView
-                android:id="@+id/descriptionTitleTextPest"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/newScanButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Description:"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:text="@string/new_scan"
+                android:textColor="@color/primary"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="2dp"
+                app:icon="@drawable/baseline_photo_camera_24"
+                app:iconTint="@color/primary"
+                app:layout_constraintTop_toBottomOf="@id/insecticidesCard"
+                app:layout_constraintStart_toEndOf="@id/shareResultButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pestNameTextView" />
-
-            <TextView
-                android:id="@+id/descriptionTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTitleTextPest"
-                tools:text="This is a detailed description of the pest that was detected, including information about its life cycle, the damage it causes, and how to control it." />
-
-            <TextView
-                android:id="@+id/treatmentTitleTextPest"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Treatment Options:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
-
-            <TextView
-                android:id="@+id/treatmentTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/treatmentTitleTextPest"
-                tools:text="1. Chemical control: Use pesticides containing X, Y, Z\n2. Biological control: Introduce natural predators\n3. Cultural practices: Adjust planting time and spacing" />
+                app:layout_constraintWidth_percent="0.48" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/buttonPanel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/newScanButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="New Scan" />
-
-        <Button
-            android:id="@+id/saveResultButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:text="Save Result" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -27,6 +27,7 @@ object LocaleHelper {
         val locale = when (languageCode) {
             "vi" -> Locale("vi") // Vietnamese
             "zh" -> Locale("zh") // Chinese
+            "ru" -> Locale("ru")
             else -> Locale("en") // English (default)
         }
 

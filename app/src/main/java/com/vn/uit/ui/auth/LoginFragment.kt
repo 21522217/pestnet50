@@ -1,7 +1,11 @@
 package com.vn.uit.ui.auth
 
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,17 +13,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.vn.uit.R
+import com.vn.uit.data.remote.ApiClient
 import com.vn.uit.databinding.FragmentLoginBinding
 import com.vn.uit.datastore.UserPreferences
-import com.vn.uit.model.AuthData
-import com.vn.uit.model.AuthResponse
+import com.vn.uit.model.AuthRequest
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import retrofit2.HttpException
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var userPreferences: UserPreferences
+    private var loginJob: Job? = null
+    private val TAG = "LoginFragment"
+    private var isPasswordVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,60 +41,44 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userPreferences = UserPreferences(requireContext())
-
-        // Setup click listeners
         setupClickListeners()
+        setupPasswordToggle()
     }
 
     private fun setupClickListeners() {
-        // Main login button
         binding.loginButton.setOnClickListener {
             val email = binding.usernameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString()
-
             if (validateInputs(email, password)) {
                 performLogin(email, password)
             }
         }
 
-        // Social login buttons
-        binding.googleButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Google login not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.facebookButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Facebook login not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.othersButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Other login options not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        // Forgot password
-        binding.forgotPasswordTextView.setOnClickListener {
-            Toast.makeText(requireContext(), "Forgot password not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        // Terms and Privacy
-        binding.termsTextView.setOnClickListener {
-            Toast.makeText(requireContext(), "Terms and Privacy not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.dontHaveAnAccount.setOnClickListener({
+        binding.googleButton.setOnClickListener { safeShowToast("Google login not implemented yet") }
+        binding.facebookButton.setOnClickListener { safeShowToast("Facebook login not implemented yet") }
+        binding.othersButton.setOnClickListener { safeShowToast("Other login options not implemented yet") }
+        binding.forgotPasswordTextView.setOnClickListener { safeShowToast("Forgot password not implemented yet") }
+        binding.termsTextView.setOnClickListener { safeShowToast("Terms and Privacy not implemented yet") }
+        binding.dontHaveAnAccount.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
-        })
+        }
     }
 
     private fun validateInputs(email: String, password: String): Boolean {
         var isValid = true
 
-        // Clear previous errors
         binding.usernameEditText.error = null
         binding.passwordEditText.error = null
 
-        if (email.isEmpty()) {
-            binding.usernameEditText.error = "Email cannot be empty"
-            isValid = false
+        when {
+            email.isEmpty() -> {
+                binding.usernameEditText.error = "Email cannot be empty"
+                isValid = false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.usernameEditText.error = "Invalid email format"
+                isValid = false
+            }
         }
 
         if (password.isEmpty()) {
@@ -96,52 +90,35 @@ class LoginFragment : Fragment() {
     }
 
     private fun performLogin(email: String, password: String) {
-        // Show loading indicator
+        loginJob?.cancel()
         toggleLoadingState(true)
 
-        lifecycleScope.launch {
+        loginJob = viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Commented out real API call
-                // val response = ApiClient.authApi.login(AuthRequest(email, password))
+                delay(1000)
+                if (!isAdded) return@launch
 
-                // Simulate a brief loading delay
-                kotlinx.coroutines.delay(1000)
+                val response = ApiClient.authApi.login(AuthRequest(email, password))
+                if (!isAdded) return@launch
 
-                // Create a fake/mock response instead
-                val response = if (email.isNotEmpty() && password.isNotEmpty()) {
-                    AuthResponse(
-                        success = true,
-                        message = "Mock login successful for $email",
-                        data = AuthData(
-                            token = "mock_jwt_token_$email",
-                            userId = 123L
-                        )
-                    )
-                } else {
-                    AuthResponse(
-                        success = false,
-                        message = "Invalid credentials",
-                        data = null
-                    )
-                }
+                if (response.status == 200 && response.data != null) {
+                    safeShowToast(getString(R.string.login_successful))
 
-                if (response.success && response.data != null) {
-                    // Save remember me preference if checked
+                    val data = response.data
+
                     if (binding.rememberMeCheckBox.isChecked) {
-                        // Save username for future login
-                        userPreferences.saveUsername(email)
+                        userPreferences.saveUsername(data.username)
                     }
 
-                    // Use single transaction to save user data
-                    userPreferences.saveUserData(response.data.token, response.data.userId)
-
-                    // Show success message
-                    Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-
-                    // IMPORTANT: Let MainActivity handle the navigation
-                    // We don't need to perform any navigation here
+                    userPreferences.saveUserData(
+                        token = data.token,
+                        refreshToken = data.refreshToken,
+                        username = data.username,
+                        email = data.email
+                    )
+                    userPreferences.saveUserId(data.userId)
                 } else {
-                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
+                    response.message?.let { safeShowToast(it) }
                 }
             } catch (e: Exception) {
                 handleLoginError(e)
@@ -152,32 +129,87 @@ class LoginFragment : Fragment() {
     }
 
     private fun toggleLoadingState(isLoading: Boolean) {
-        _binding?.apply {
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
-            loginButton.isEnabled = !isLoading
-            googleButton.isEnabled = !isLoading
-            facebookButton.isEnabled = !isLoading
-            othersButton.isEnabled = !isLoading
-            usernameEditText.isEnabled = !isLoading
-            passwordEditText.isEnabled = !isLoading
-            rememberMeCheckBox.isEnabled = !isLoading
-            forgotPasswordTextView.isEnabled = !isLoading
+        _binding?.let { binding ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+            binding.loginButton.isEnabled = !isLoading
+            binding.googleButton.isEnabled = !isLoading
+            binding.facebookButton.isEnabled = !isLoading
+            binding.othersButton.isEnabled = !isLoading
+            binding.usernameEditText.isEnabled = !isLoading
+            binding.passwordEditText.isEnabled = !isLoading
+            binding.rememberMeCheckBox.isEnabled = !isLoading
+            binding.forgotPasswordTextView.isEnabled = !isLoading
+        }
+    }
+
+    private fun parseErrorMessage(errorBody: String?): String {
+        return try {
+            val json = JSONObject(errorBody ?: return "Unknown error")
+            json.optString("message", "Unknown error")
+        } catch (e: Exception) {
+            "Failed to parse error"
         }
     }
 
     private fun handleLoginError(error: Exception) {
+        if (!isAdded) return
+
         val errorMessage = when {
-            error.message?.contains("timeout") == true ->
-                "Connection timeout. Please try again."
-            error.message?.contains("Unable to resolve host") == true ->
-                "No internet connection to this device."
+            error is HttpException -> {
+                val raw = error.response()?.errorBody()?.string()
+                parseErrorMessage(raw)
+            }
+            error.message?.contains("timeout", true) == true -> "Connection timeout. Try again."
+            error.message?.contains("Unable to resolve host", true) == true -> "No internet connection."
             else -> "Login failed: ${error.localizedMessage ?: "Unknown error"}"
         }
 
-        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        safeShowToast(errorMessage)
+    }
+
+    private fun safeShowToast(message: String) {
+        context?.takeIf { isAdded }?.let {
+            Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Hide password
+            binding.passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_off, 0)
+            isPasswordVisible = false
+        } else {
+            // Show password
+            binding.passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            binding.passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_on, 0)
+            isPasswordVisible = true
+        }
+
+        // Move cursor to end of text
+        binding.passwordEditText.setSelection(binding.passwordEditText.text?.length ?: 0)
+    }
+
+    private fun setupPasswordToggle() {
+        binding.passwordEditText.setOnTouchListener { view, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableEnd = binding.passwordEditText.compoundDrawables[2] // Right drawable
+                if (drawableEnd != null) {
+                    val drawableWidth = drawableEnd.intrinsicWidth
+                    val touchAreaStart = binding.passwordEditText.width - binding.passwordEditText.paddingEnd - drawableWidth
+
+                    if (event.x >= touchAreaStart) {
+                        togglePasswordVisibility()
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            false
+        }
     }
 
     override fun onDestroyView() {
+        loginJob?.cancel()
         super.onDestroyView()
         _binding = null
     }

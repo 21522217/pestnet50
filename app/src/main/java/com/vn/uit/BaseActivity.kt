@@ -1,3 +1,4 @@
+
 package com.vn.uit
 
 import android.content.Context
@@ -8,22 +9,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.vn.uit.utils.LocaleHelper
 import com.vn.uit.utils.ThemeHelper
 
-/**
- * Base activity that should be extended by all activities to support language switching
- */
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        // Apply the saved language configuration
         val languageCode = LocaleHelper.getSelectedLanguage(newBase)
         val context = LocaleHelper.setLocale(newBase, languageCode)
         super.attachBaseContext(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         ThemeHelper.applyTheme(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

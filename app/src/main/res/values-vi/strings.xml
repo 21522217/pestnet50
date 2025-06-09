@@ -1,80 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="navigation_drawer_open">Mở ngăn điều hướng</string>
-    <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="app_name">PestNet</string>
+    <string name="navigation_drawer_open">Mở thanh điều hướng</string>
+    <string name="navigation_drawer_close">Đóng thanh điều hướng</string>
+    <string name="nav_header_title">PestNet 50 - Phân loại sâu bệnh</string>
+    <string name="nav_header_subtitle">uit.pestnet@android.com</string>
     <string name="nav_header_desc">Tiêu đề điều hướng</string>
     <string name="action_settings">Cài đặt</string>
 
-    <string name="login">Đăng nhập</string>
-    <string name="username">Tên người dùng</string>
-    <string name="password">Mật khẩu</string>
-    <string name="login_title">ĐĂNG NHẬP PESTNET</string>
+    <string name="login_title">ĐĂNG NHẬP</string>
     <string name="username_hint">Vui lòng nhập tên người dùng…</string>
     <string name="password_hint">Vui lòng nhập mật khẩu…</string>
     <string name="remember_me">Ghi nhớ đăng nhập</string>
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="continue_with_google">Tiếp tục với Google</string>
     <string name="continue_with_facebook">Tiếp tục với Facebook</string>
-    <string name="continue_with_others">Tiếp tục với các phương thức khác</string>
-    <string name="terms_and_privacy">Điều khoản và Chính sách</string>
+    <string name="continue_with_others">Tiếp tục với tùy chọn khác</string>
+    <string name="terms_and_privacy">Điều khoản và Quyền riêng tư</string>
     <string name="copyright">2025©Bản quyền</string>
     <string name="or">hoặc</string>
-    <string name="dontHaveAnAccountPleaseSignup">Don\'t have an account? Please signup</string>
+    <string name="dontHaveAnAccountPleaseSignup">Chưa có tài khoản? Vui lòng đăng ký</string>
 
-    <string name="signup_title">SIGN UP</string>
+    <string name="signup_title">ĐĂNG KÝ</string>
     <string name="email">Email</string>
-    <string name="email_hint">Please enter your email</string>
-    <string name="confirm_password_hint">Confirm your password</string>
-    <string name="already_have_account">Already have an account? Login</string>
+    <string name="email_hint">Vui lòng nhập email của bạn</string>
+    <string name="confirm_password_hint">Xác nhận mật khẩu</string>
+    <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
 
     <string name="menu_home">Trang chủ</string>
     <string name="menu_gallery">Thư viện</string>
     <string name="menu_slideshow">Trình chiếu</string>
+    <string name="username">Tên người dùng</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
     <string name="sign_up">Đăng ký</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="already_have_an_account_log_in">Đã có tài khoản? Đăng nhập</string>
-    <string name="open_camera">Mở máy ảnh</string>
-    <string name="toggle_flash">Bật/Tắt đèn flash</string>
+    <string name="open_camera">Mở camera</string>
+    <string name="toggle_flash">Bật/tắt đèn flash</string>
     <string name="take_picture">Chụp ảnh</string>
     <string name="apply_edit">Áp dụng chỉnh sửa</string>
     <string name="save_image">Lưu ảnh</string>
     <string name="image_preview">Xem trước ảnh</string>
     <string name="dynamic_duo">Bộ đôi hoàn hảo</string>
-    <string name="result_will_appear_here">Kết quả sẽ hiển thị ở đây</string>
-    <string name="no_images_found">Không tìm thấy ảnh nào</string>
+    <string name="result_will_appear_here">Kết quả sẽ hiển thị tại đây</string>
+    <string name="no_images_found">Không tìm thấy ảnh</string>
     <string name="take_photo">Chụp ảnh</string>
     <string name="open_gallery">Mở thư viện</string>
     <string name="pest_occurrences">Số lần phát hiện sâu bệnh: %d</string>
 
-    <!-- General -->
-    <string name="app_name">Phân Loại Sâu Bệnh</string>
-
     <!-- Settings -->
-    <string name="general_settings">Cài Đặt Chung</string>
-    <string name="enable_notifications">Bật Thông Báo</string>
+    <string name="general_settings">Cài đặt chung</string>
+    <string name="enable_notifications">Bật thông báo</string>
     <string name="receive_notifications">Nhận thông báo từ ứng dụng</string>
-    <string name="app_language">Ngôn Ngữ Ứng Dụng</string>
-    <string name="set_language">Đặt ngôn ngữ của ứng dụng</string>
+    <string name="app_language">Ngôn ngữ ứng dụng</string>
+    <string name="set_language">Chọn ngôn ngữ ứng dụng</string>
+
+    <!-- Language options -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Tiếng Việt</item>
+        <item>中文</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>vi</item>
+        <item>zh</item>
+    </string-array>
 
     <!-- About Us -->
-    <string name="about_us">Về Chúng Tôi</string>
-    <string name="about_app_title">Về Ứng Dụng Phân Loại Sâu Bệnh</string>
-    <string name="about_app_summary">Phiên bản: 1.0\\nCông ty: XYZ Corp\\nPhát triển bởi: Tên Của Bạn</string>
-    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">Về Chúng Tôi\\n\\nPhiên bản: 1.0\\nCông ty: XYZ Corp\\nPhát triển bởi: Tên Của Bạn</string>
+    <string name="about_us">Về chúng tôi</string>
+    <string name="about_app_title">Giới thiệu ứng dụng phân loại sâu bệnh</string>
+    <string name="about_app_summary">Phiên bản: 1.0\nCông ty: XYZ Corp\nPhát triển bởi: Tên của bạn</string>
+    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">Về chúng tôi\n\nPhiên bản ứng dụng: 1.0\nCông ty: XYZ Corp\nPhát triển bởi: Tên của bạn</string>
 
-    <string name="app_theme">Theme</string>
-    <string name="set_theme">Choose app theme</string>
+    <string name="app_theme">Giao diện</string>
+    <string name="set_theme">Chọn giao diện ứng dụng</string>
 
-    <string name="appearance_settings">Appearance</string>
-    <string name="theme_title">Theme</string>
-    <string name="theme_summary">Set the app theme</string>
+    <string name="appearance_settings">Giao diện</string>
+    <string name="theme_title">Giao diện</string>
+    <string name="theme_summary">Thiết lập giao diện ứng dụng</string>
+    <string name="most_detected_pests">Sâu bệnh được phát hiện nhiều nhất</string>
+    <string name="view_all">Xem tất cả</string>
+    <string name="scan">Quét</string>
+    <string name="recent_scans">Các lần quét gần đây</string>
+    <string name="search_for_pests">Tìm kiếm sâu bệnh…</string>
+    <string name="best_accuracy_results">Kết quả chính xác nhất</string>
+    <string name="share">Chia sẻ</string>
+    <string name="save_report">Lưu báo cáo</string>
+    <string name="failed_to_load_pest_data">Không tải được dữ liệu sâu bệnh</string>
+    <string name="loading_details">Đang tải chi tiết…</string>
+    <string name="may_11_2024">11 tháng 5, 2024</string>
+    <string name="image_information">Thông tin ảnh</string>
+    <string name="also_detected">Cũng được phát hiện</string>
+    <string name="treatment_options">Phương pháp xử lý</string>
+    <string name="_5_occurrences">5 lần phát hiện</string>
+    <string name="spodoptera_frugiperda">Sâu keo mùa thu</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Sâu này ăn nhiều loại cây trồng như ngô, bông và rau quả. Chúng có thể gây thiệt hại nghiêm trọng bằng cách ăn lá và đục vào quả.</string>
+    <string name="armyworm">Sâu khoang</string>
+    <string name="_98_confidence">Độ tin cậy 98%</string>
+    <string name="pest_detection_details">Chi tiết nhận diện sâu bệnh</string>
+    <string name="close">Đóng</string>
+    <string name="close_camera">Đóng camera</string>
+    <string name="camera_settings">Cài đặt camera</string>
+    <string name="flip_camera">Đảo camera</string>
+    <string name="detected_pest">Sâu bệnh phát hiện:</string>
+    <string name="description">Mô tả:</string>
+    <string name="new_scan">Quét mới</string>
+    <string name="save_result">Lưu kết quả</string>
+    <string name="search_pests">Tìm sâu bệnh…</string>
+    <string name="similar_pests">Sâu bệnh tương tự</string>
+    <string name="recommended_insecticides">Thuốc trừ sâu khuyến nghị</string>
+    <string name="learn_more">Tìm hiểu thêm</string>
+    <string name="detected_pest_image">Ảnh sâu bệnh phát hiện</string>
+    <string name="home">Trang chủ</string>
+    <string name="gallery">Thư viện</string>
+    <string name="history">Lịch sử</string>
+    <string name="settings">Cài đặt</string>
+    <string name="account">Tài khoản</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="choose_from_device_gallery">Chọn từ thư viện thiết bị</string>
+    <string name="take_a_photo">Chụp ảnh</string>
+    <string name="choose_from_gallery">Chọn từ thư viện</string>
 
     <string-array name="theme_entries">
-        <item>System default</item>
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Mặc định hệ thống</item>
+        <item>Sáng</item>
+        <item>Tối</item>
     </string-array>
 
     <string-array name="theme_values">

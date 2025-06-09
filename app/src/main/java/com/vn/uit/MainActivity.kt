@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.vn.uit.data.remote.ApiClient
 import com.vn.uit.databinding.ActivityMainBinding
 import com.vn.uit.datastore.UserPreferences
 import kotlinx.coroutines.flow.first
@@ -29,11 +30,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Set up toolbar as actionbar
         setSupportActionBar(binding.toolbar)
 
         userPrefs = UserPreferences(this)
+
+
+        ApiClient.init(this)
+
+
         val host =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         nav = host.navController
@@ -57,8 +61,7 @@ class MainActivity : BaseActivity() {
         if (currentGraphId != graphRes) {
             currentGraphId = graphRes
             nav.graph = nav.navInflater.inflate(graphRes)
-            configureAppBar(graphRes)
-            configureDrawer()
+            configureUI(graphRes)
         }
     }
 
@@ -75,8 +78,7 @@ class MainActivity : BaseActivity() {
                     try {
                         currentGraphId = graphRes
                         nav.graph = nav.navInflater.inflate(graphRes)
-                        configureAppBar(graphRes)
-                        configureDrawer()
+                        configureUI(graphRes)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         recreate()
@@ -89,29 +91,21 @@ class MainActivity : BaseActivity() {
     private fun setupDestinationChangeListener() {
         nav.addOnDestinationChangedListener { _, dest, _ ->
             // Define screens that need special handling
-            val authScreens = setOf(R.id.loginFragment, R.id.signupFragment)
             val cameraScreens = setOf(
                 R.id.cameraFragment, R.id.imageEditorFragment, R.id.resultFragment
             )
 
-            val isAuthScreen = dest.id in authScreens
             val isCameraScreen = dest.id in cameraScreens
 
-            // Handle drawer visibility and lock state
-            binding.drawerLayout.setDrawerLockMode(
-                if (isAuthScreen || isCameraScreen) DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-                else DrawerLayout.LOCK_MODE_UNLOCKED
-            )
-            binding.navView.isVisible = !isAuthScreen
-
-            // Handle toolbar visibility - hide on camera screens
-            binding.appBarLayout.isVisible = !isCameraScreen
-
-            // Set system UI flags for camera screens (immersive mode)
+            // Handle camera screens special UI treatment
             if (isCameraScreen) {
                 // Apply camera theme for full immersive experience
                 setTheme(R.style.Theme_PestClassification_Camera)
 
+                // Hide app bar for camera screens
+                binding.appBarLayout.isVisible = false
+
+                // Set immersive mode for camera screens
                 window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
                         or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -119,30 +113,51 @@ class MainActivity : BaseActivity() {
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN)
             } else {
+                // For non-camera screens, restore normal UI visibility
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+
+                // Show app bar for non-camera screens in main flow
+                if (currentGraphId == R.navigation.main_nav_graph) {
+                    binding.appBarLayout.isVisible = true
+                }
             }
         }
     }
 
-    private fun configureAppBar(graphRes: Int) {
+    private fun configureUI(graphRes: Int) {
         if (graphRes == R.navigation.main_nav_graph) {
-            // Top-level destinations where hamburger menu should appear
+            // Configure for main navigation graph (authenticated user)
+
+            // Show app bar and drawer
+            binding.appBarLayout.isVisible = true
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            binding.navView.isVisible = true
+
+            // Set up top-level destinations for main flow
             val topLevelDestinations = setOf(
                 R.id.nav_home,
                 R.id.nav_gallery,
                 R.id.nav_settings,
-                R.id.nav_history
+                R.id.nav_history,
+                R.id.nav_pests
             )
 
+            // Configure app bar with drawer for main flow
             appBarConfig = AppBarConfiguration(
                 topLevelDestinations,
                 binding.drawerLayout
             )
             setSupportActionBar(binding.toolbar)
             setupActionBarWithNavController(nav, appBarConfig)
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            binding.navView.isVisible = true
+
+            // Configure drawer navigation
+            configureDrawer()
+
         } else {
+            // Configure for auth navigation graph (unauthenticated user)
+
+            // Hide app bar and drawer for auth flow
+            binding.appBarLayout.isVisible = false
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             binding.navView.isVisible = false
         }
@@ -168,7 +183,7 @@ class MainActivity : BaseActivity() {
 
     private fun logoutUser() {
         lifecycleScope.launch {
-            userPrefs.clearUserData()
+            userPrefs.clear()
         }
     }
 

@@ -4,100 +4,75 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Extension property to create DataStore<Preferences> instance
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
 
 class UserPreferences(private val context: Context) {
 
     companion object {
-        val TOKEN_KEY = stringPreferencesKey("auth_token")
-        val USER_ID_KEY = longPreferencesKey("user_id")
-        private val USERNAME_KEY = stringPreferencesKey("username")
+        private val KEY_TOKEN = stringPreferencesKey("token")
+        private val KEY_REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        private val KEY_USERNAME = stringPreferencesKey("username")
+        private val KEY_EMAIL = stringPreferencesKey("email")
+        private val KEY_USER_ID = stringPreferencesKey("user_id")
     }
 
-    /**
-     * Save auth token to preferences
-     */
-    suspend fun saveToken(token: String) {
-        context.dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
+    suspend fun saveUserData(token: String, refreshToken: String, username: String, email: String) {
+        context.dataStore.edit {
+            it[KEY_TOKEN] = token
+            it[KEY_REFRESH_TOKEN] = refreshToken
+            it[KEY_USERNAME] = username
+            it[KEY_EMAIL] = email
         }
     }
+
+    suspend fun saveUserId(userId: String) {
+        context.dataStore.edit {
+            it[KEY_USER_ID] = userId
+        }
+    }
+
     suspend fun saveUsername(username: String) {
         context.dataStore.edit { preferences ->
-            preferences[USERNAME_KEY] = username
+            preferences[KEY_USERNAME] = username
         }
     }
 
-
-    /**
-     * Save user ID to preferences
-     */
-    suspend fun saveUserId(userId: Long) {
-        context.dataStore.edit { preferences ->
-            preferences[USER_ID_KEY] = userId
-        }
-    }
-
-    /**
-     * Save both token and userId in a single transaction
-     * This helps avoid multiple navigation graph changes
-     */
-    suspend fun saveUserData(token: String, userId: Long) {
-        context.dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
-            preferences[USER_ID_KEY] = userId
-        }
-    }
-
-    /**
-     * Get the auth token as a Flow
-     */
     fun getToken(): Flow<String?> {
-        return context.dataStore.data.map { preferences ->
-            preferences[TOKEN_KEY]
-        }
+        return context.dataStore.data.map { it[KEY_TOKEN] }
     }
 
-    /**
-     * Get the user ID as a Flow
-     */
-    fun getUserId(): Flow<Long?> {
-        return context.dataStore.data.map { preferences ->
-            preferences[USER_ID_KEY]
-        }
+    fun getRefreshToken(): Flow<String?> {
+        return context.dataStore.data.map { it[KEY_REFRESH_TOKEN] }
     }
 
-    /**
-     * Clear all preferences
-     */
+    fun getUsername(): Flow<String?> {
+        return context.dataStore.data.map { it[KEY_USERNAME] }
+    }
+
+    fun getEmail(): Flow<String?> {
+        return context.dataStore.data.map { it[KEY_EMAIL] }
+    }
+
+    fun getUserId(): Flow<String?> {
+        return context.dataStore.data.map { it[KEY_USER_ID] }
+    }
+
     suspend fun clear() {
         context.dataStore.edit { it.clear() }
     }
 
-    /**
-     * Clear only the auth token
-     */
-    suspend fun clearToken() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(TOKEN_KEY)
-        }
-    }
-
-    /**
-     * Clear user data (token and ID)
-     */
-    suspend fun clearUserData() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(TOKEN_KEY)
-            preferences.remove(USER_ID_KEY)
+    suspend fun clearAuthData() {
+        context.dataStore.edit {
+            it.remove(KEY_TOKEN)
+            it.remove(KEY_REFRESH_TOKEN)
+            it.remove(KEY_USERNAME)
+            it.remove(KEY_EMAIL)
         }
     }
 }

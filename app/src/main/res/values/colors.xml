@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Core Material Design Colors -->
-    <color name="primary">#673AB7</color> <!-- Deep Purple 500 -->
-    <color name="primary_dark">#512DA8</color> <!-- Deep Purple 700 -->
-    <color name="secondary">#B71C1C</color> <!-- Red 900 -->
-    <color name="secondary_dark">#7F0000</color> <!-- Darker variant of Red 900 -->
+    <!-- Core Science Palette -->
+    <color name="primary">#0288D1</color> <!-- Bright Science Blue -->
+    <color name="primary_dark">#01579B</color> <!-- Dark Blue -->
+    <color name="secondary">#00ACC1</color> <!-- Cyan -->
+    <color name="secondary_dark">#006064</color> <!-- Deep Cyan -->
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <!-- Theme custom attributes -->
-    <color name="white_translucent">#80FFFFFF</color>
-    <color name="background_light">#F5F5F5</color> <!-- Light grey -->
-    <color name="card_background_light">#FFFFFF</color> <!-- White cards -->
-    <color name="text_primary_light">#212121</color> <!-- Almost black -->
-    <color name="text_secondary_light">#757575</color> <!-- Medium grey -->
-    <color name="background_dark">#121212</color> <!-- Dark grey / near black -->
-    <color name="card_background_dark">#1E1E1E</color> <!-- Slightly lighter dark grey -->
-    <color name="text_primary_dark">#FFFFFF</color> <!-- Pure white for primary text -->
-    <color name="text_secondary_dark">#B3B3B3</color> <!-- Light grey for secondary text -->
+    <!-- Light Theme Colors -->
+    <color name="background">#E1F5FE</color> <!-- Light Sky Blue -->
+    <color name="card_background">#B3E5FC</color> <!-- Soft Cyan -->
+    <color name="text_primary">#0D47A1</color> <!-- Dark Blue Text -->
+    <color name="text_secondary">#1565C0</color> <!-- Medium Blue -->
 
-    <!-- Existing palette (optional but kept for reuse) -->
-    <color name="purple_200">#BB86FC</color>
-    <color name="purple_500">#6200EE</color>
-    <color name="purple_700">#3700B3</color>
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_700">#018786</color>
+    <!-- UI Supporting Colors for Light Theme -->
+    <color name="surface_light">#F0F4C3</color> <!-- Light Lime Green -->
+    <color name="on_surface_light">#212121</color> <!-- Dark Text on Light Surface -->
+    <color name="outline_light">#90A4AE</color> <!-- Soft Blue-Grey -->
+
+    <!-- Translucent white for overlays -->
+    <color name="white_translucent">#80FFFFFF</color>
 
     <!-- UI Elements -->
-    <color name="editTextBackground">#F5F5F5</color>
-    <color name="buttonBackground">#673AB7</color>
-    <color name="socialButtonBackground">#E0E0E0</color>
-    <color name="dividerColor">#CCCCCC</color>
+    <color name="editTextBackground">#E3F2FD</color> <!-- Very Light Blue -->
+    <color name="buttonBackground">#0288D1</color> <!-- Bright Blue Button -->
+    <color name="socialButtonBackground">#455A64</color> <!-- Blue-Grey -->
+    <color name="dividerColor">#78909C</color> <!-- Cool Grey -->
 
     <!-- Social brand colors -->
     <color name="googleRed">#EA4335</color>
     <color name="facebookBlue">#1877F2</color>
     <color name="othersOrange">#FF6D00</color>
+
+    <!-- Base colors -->
+    <color name="search_background">#E3F2FD</color> <!-- Light Blue Background -->
+    <color name="header_background">#0277BD</color> <!-- Medium Blue -->
+    <color name="accent_green">#64DD17</color> <!-- Neon Green Accent -->
+    <color name="confidence_background">#AA000000</color>
+    <color name="button_secondary">#B0BEC5</color> <!-- Light Grey -->
+    <color name="error_red">#D32F2F</color> <!-- Bright Red -->
+
+    <!-- Unused / placeholder colors -->
+    <color name="purple_200">#90CAF9</color>
+    <color name="purple_700">#1976D2</color>
+    <color name="teal_200">#80DEEA</color>
+    <color name="teal_700">#00796B</color>
+
+    <color name="surface_dark">#F0F4C3</color>
+    <color name="on_surface_dark">#212121</color>
+    <color name="outline_dark">#90A4AE</color>
+
+    <color name="risk_high">#FF5722</color>
+    <color name="risk_medium">#FF9800</color>
+    <color name="risk_low">#4CAF50</color>
+    <color name="insecticide_background">#E3F2FD</color>
 </resources>

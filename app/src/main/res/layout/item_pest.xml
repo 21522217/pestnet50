@@ -7,45 +7,54 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/pestImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
             android:background="@android:color/darker_gray"
-            android:scaleType="centerCrop" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Add a slight overlay for better text visibility -->
         <View
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:background="#80000000" />
+            android:background="#80000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/pestNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:padding="8dp"
             android:text="Pest Name"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="8dp" />
 
         <TextView
             android:id="@+id/occurrenceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:text="10"
+            android:textColor="@android:color/white"
             android:background="#80FF0000"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
-            android:text="10"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
-    </FrameLayout>
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

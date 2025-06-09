@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PestNet</string>
+    <string name="navigation_drawer_open">Открыть навигационное меню</string>
+    <string name="navigation_drawer_close">Закрыть навигационное меню</string>
+    <string name="nav_header_title">PestNet 50 - Классификация вредителей</string>
+    <string name="nav_header_subtitle">uit.pestnet@android.com</string>
+    <string name="nav_header_desc">Навигационный заголовок</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="login_title">ВОЙТИ</string>
+    <string name="username_hint">Пожалуйста, введите имя пользователя…</string>
+    <string name="password_hint">Пожалуйста, введите пароль…</string>
+    <string name="remember_me">Запомнить меня</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="continue_with_google">Продолжить через Google</string>
+    <string name="continue_with_facebook">Продолжить через Facebook</string>
+    <string name="continue_with_others">Продолжить через другие</string>
+    <string name="terms_and_privacy">Условия и конфиденциальность</string>
+    <string name="copyright">2025©Авторские права</string>
+    <string name="or">или</string>
+    <string name="dontHaveAnAccountPleaseSignup">Нет аккаунта? Зарегистрируйтесь</string>
+
+    <string name="signup_title">РЕГИСТРАЦИЯ</string>
+    <string name="email">Эл. почта</string>
+    <string name="email_hint">Пожалуйста, введите вашу эл. почту</string>
+    <string name="confirm_password_hint">Подтвердите ваш пароль</string>
+    <string name="already_have_account">Уже есть аккаунт? Войти</string>
+
+    <string name="menu_home">Главная</string>
+    <string name="menu_gallery">Галерея</string>
+    <string name="menu_slideshow">Слайд-шоу</string>
+    <string name="username">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="login">Войти</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="already_have_an_account_log_in">Уже есть аккаунт? Войти</string>
+    <string name="open_camera">Открыть камеру</string>
+    <string name="toggle_flash">Переключить вспышку</string>
+    <string name="take_picture">Сделать снимок</string>
+    <string name="apply_edit">Применить изменения</string>
+    <string name="save_image">Сохранить изображение</string>
+    <string name="image_preview">Предпросмотр изображения</string>
+    <string name="dynamic_duo">Динамический дуэт</string>
+    <string name="result_will_appear_here">Результат появится здесь</string>
+    <string name="no_images_found">Изображения не найдены</string>
+    <string name="take_photo">Сделать фото</string>
+    <string name="open_gallery">Открыть галерею</string>
+    <string name="pest_occurrences">Появления вредителя: %d</string>
+
+    <!-- Settings -->
+    <string name="general_settings">Общие настройки</string>
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="receive_notifications">Получать уведомления от приложения</string>
+    <string name="app_language">Язык приложения</string>
+    <string name="set_language">Установить язык приложения</string>
+
+    <!-- Language options -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>Tiếng Việt</item>
+        <item>中文</item>
+        <item>Россия</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>vi</item>
+        <item>zh</item>
+        <item>ru</item>
+    </string-array>
+    <!-- About Us -->
+    <string name="about_us">О нас</string>
+    <string name="about_app_title">О приложении для классификации вредителей</string>
+    <string name="about_app_summary">Версия: 1.0\nКомпания: XYZ Corp\nРазработано: Ваше имя</string>
+    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">О нас\n\nВерсия приложения: 1.0\nКомпания: XYZ Corp\nРазработано: Ваше имя</string>
+
+    <string name="app_theme">Тема</string>
+    <string name="set_theme">Выберите тему приложения</string>
+
+    <string name="appearance_settings">Оформление</string>
+    <string name="theme_title">Тема</string>
+    <string name="theme_summary">Установите тему приложения</string>
+    <string name="most_detected_pests">Чаще всего обнаруженные вредители</string>
+    <string name="view_all">Показать все</string>
+    <string name="scan">Сканировать</string>
+    <string name="recent_scans">Последние сканирования</string>
+    <string name="search_for_pests">Поиск вредителей...</string>
+    <string name="best_accuracy_results">Результаты с лучшей точностью</string>
+    <string name="share">Поделиться</string>
+    <string name="save_report">Сохранить отчет</string>
+    <string name="failed_to_load_pest_data">Не удалось загрузить данные о вредителях</string>
+    <string name="loading_details">Загрузка деталей...</string>
+    <string name="may_11_2024">11 мая 2024</string>
+    <string name="image_information">Информация об изображении</string>
+    <string name="also_detected">Также обнаружено</string>
+    <string name="treatment_options">Варианты обработки</string>
+    <string name="_5_occurrences">5 появлений</string>
+    <string name="spodoptera_frugiperda">Spodoptera frugiperda</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Этот вредитель питается различными культурами, включая кукурузу, хлопок и овощи. Он может нанести серьёзный ущерб, объедая листья и проникая в плоды.</string>
+    <string name="armyworm">Армейский червь</string>
+    <string name="_98_confidence">98% уверенность</string>
+    <string name="pest_detection_details">Детали обнаружения вредителя</string>
+    <string name="close">Закрыть</string>
+    <string name="close_camera">Закрыть камеру</string>
+    <string name="camera_settings">Настройки камеры</string>
+    <string name="flip_camera">Переключить камеру</string>
+    <string name="detected_pest">Обнаруженный вредитель:</string>
+    <string name="description">Описание:</string>
+    <string name="new_scan">Новое сканирование</string>
+    <string name="save_result">Сохранить результат</string>
+    <string name="search_pests">Поиск вредителей...</string>
+    <string name="similar_pests">Похожие вредители</string>
+    <string name="recommended_insecticides">Рекомендуемые инсектициды</string>
+    <string name="learn_more">Узнать больше</string>
+    <string name="detected_pest_image">Изображение обнаруженного вредителя</string>
+    <string name="home">Главная</string>
+    <string name="gallery">Галерея</string>
+    <string name="history">История</string>
+    <string name="settings">Настройки</string>
+    <string name="account">Аккаунт</string>
+    <string name="logout">Выход</string>
+    <string name="search">Поиск</string>
+    <string name="choose_from_device_gallery">Выбрать из галереи устройства</string>
+    <string name="take_a_photo">Сделать фото</string>
+    <string name="choose_from_gallery">Выбрать из галереи</string>
+    <string name="unknown_pest">Неизвестный вредитель</string>
+    <string name="scientific_name_unavailable">Научное название недоступно</string>
+    <string name="description_unavailable">Описание недоступно</string>
+    <string name="confidence_percentage">%d%% уверенность</string>
+    <string name="date_unavailable">Дата недоступна</string>
+    <string name="filename_unavailable">Неизвестный файл</string>
+    <string name="pest_image">Изображение вредителя</string>
+    <string name="occurrences_count">Количество появлений: %d%%</string>
+    <string name="actions">Действия</string>
+    <string name="remove_result">Удалить результат</string>
+    <string name="confidence_90">Уверенность: 90%</string>
+    <string name="image_description">Описание изображения</string>
+    <string name="pest_name">Название вредителя</string>
+    <string name="classified_image">Классифицированное изображение</string>
+    <string name="pests">Вредители</string>
+    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">Основной вредитель риса, который наносит значительный ущерб, сворачивая и поедая листья риса, что приводит к снижению фотосинтеза и урожайности.</string>
+    <string name="biological_characteristics">🔬 Биологические характеристики</string>
+    <string name="regions_affected">📍 Пострадавшие регионы</string>
+    <string name="view_on_inaturalist">Посмотреть на iNaturalist</string>
+
+    <string name="login_successful">Вход выполнен успешно!</string>
+    <string name="share_results">Поделиться результатом</string>
+
+    <string-array name="theme_entries">
+        <item>Системная по умолчанию</item>
+        <item>Светлая</item>
+        <item>Темная</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+</resources>

@@ -25,28 +25,28 @@ class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
 
-    // Share the PestClassificationViewModel with ImageEditorFragment
+
     private val pestClassificationViewModel: PestClassificationViewModel by activityViewModels()
 
-    // Activity result launcher for picking images
+
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // Get selected image Uri
+
             val imageUri = result.data?.data
 
-            // Process the image with pest classification before navigating
+
             imageUri?.let {
-                // Set the image in the shared ViewModel
+
                 pestClassificationViewModel.setImageUri(it)
 
-                // Navigate to image editor with the selected image
+
                 val bundle = Bundle().apply {
                     putString("imageUri", it.toString())
                 }
 
-                // Navigate to image editor
+
                 findNavController().navigate(
                     R.id.action_galleryFragment_to_imageEditorFragment,
                     bundle
@@ -69,51 +69,44 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup UI and listeners
         setupRecyclerView()
 
-        // If navigated directly from Home for image selection, show image picker immediately
-        if (findNavController().previousBackStackEntry?.destination?.id == R.id.nav_home) {
-            openGalleryPicker()
-        }
-
-        // Setup gallery picker button
         binding.pickImageButton.setOnClickListener {
             openGalleryPicker()
         }
     }
 
     private fun setupRecyclerView() {
-        // Set up the RecyclerView with a GridLayoutManager
+
         binding.recyclerGallery.layoutManager = GridLayoutManager(requireContext(), 3)
 
-        // Load gallery images from ViewModel
+
         galleryViewModel.loadGalleryImages()
 
-        // Create and set adapter
+
         val galleryAdapter = GalleryAdapter { imageUri ->
             navigateToImageEditor(imageUri)
         }
         binding.recyclerGallery.adapter = galleryAdapter
 
-        // Observe gallery images
+
         galleryViewModel.galleryImages.observe(viewLifecycleOwner) { images ->
-            // Update adapter with images
+
             galleryAdapter.submitList(images)
 
-            // Show/hide empty state
+
             binding.emptyGalleryText.visibility = if (images.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
     private fun openGalleryPicker() {
-        // Create intent to pick image from gallery
+
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         pickImageLauncher.launch(intent)
     }
 
     private fun navigateToImageEditor(imageUri: Uri) {
-        // Process the image with pest classification before navigating
+
         pestClassificationViewModel.setImageUri(imageUri)
 
         val bundle = Bundle().apply {

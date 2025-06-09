@@ -61,11 +61,13 @@
         <item>English</item>
         <item>Tiếng Việt</item>
         <item>中文</item>
+        <item>Россия</item>
     </string-array>
     <string-array name="language_values">
         <item>en</item>
         <item>vi</item>
         <item>zh</item>
+        <item>ru</item>
     </string-array>
 
     <!-- About Us -->
@@ -80,6 +82,77 @@
     <string name="appearance_settings">Appearance</string>
     <string name="theme_title">Theme</string>
     <string name="theme_summary">Set the app theme</string>
+    <string name="most_detected_pests">Most Detected Pests</string>
+    <string name="view_all">View All</string>
+    <string name="scan">Scan</string>
+    <string name="recent_scans">Recent Scans</string>
+    <string name="search_for_pests">Search for pests...</string>
+    <string name="best_accuracy_results">Best Accuracy Results</string>
+    <string name="share">Share</string>
+    <string name="save_report">Save Report</string>
+    <string name="failed_to_load_pest_data">Failed to load pest data</string>
+    <string name="loading_details">Loading details...</string>
+    <string name="may_11_2024">May 11, 2024</string>
+    <string name="image_information">Image Information</string>
+    <string name="also_detected">Also Detected</string>
+    <string name="treatment_options">Treatment Options</string>
+    <string name="_5_occurrences">5 occurrences</string>
+    <string name="spodoptera_frugiperda">Spodoptera frugiperda</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">This pest feeds on various crops including corn, cotton, and vegetables. It can cause severe damage by defoliating plants and burrowing into fruit.</string>
+    <string name="armyworm">Armyworm</string>
+    <string name="_98_confidence">98% Confidence</string>
+    <string name="pest_detection_details">Pest Detection Details</string>
+    <string name="close">Close</string>
+    <string name="close_camera">Close camera</string>
+    <string name="camera_settings">Camera settings</string>
+    <string name="flip_camera">Flip camera</string>
+    <string name="detected_pest">Detected Pest:</string>
+    <string name="description">Description:</string>
+    <string name="new_scan">New Scan</string>
+    <string name="save_result">Save Result</string>
+    <string name="search_pests">Search pests...</string>
+    <string name="similar_pests">Similar Pests</string>
+    <string name="recommended_insecticides">Recommended Insecticides</string>
+    <string name="learn_more">Learn more</string>
+    <string name="detected_pest_image">Detected Pest Image</string>
+    <string name="home">Home</string>
+    <string name="gallery">Gallery</string>
+    <string name="history">History</string>
+    <string name="settings">Settings</string>
+    <string name="account">Account</string>
+    <string name="logout">Logout</string>
+    <string name="search">Search</string>
+    <string name="choose_from_device_gallery">Choose from Device Gallery</string>
+    <string name="take_a_photo">Take a Photo</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="unknown_pest">Unknown Pest</string>
+    <string name="scientific_name_unavailable">Scientific name unavailable</string>
+    <string name="description_unavailable">No description available</string>
+    <string name="confidence_percentage">%d%% confidence</string>
+    <string name="date_unavailable">Date unavailable</string>
+    <string name="filename_unavailable">Unknown file</string>
+    <string name="pest_image">Pest image</string>
+    <string name="occurrences_count">Occurrences: %d%%</string>
+    <string name="actions">Actions</string>
+    <string name="remove_result">Remove result</string>
+    <string name="confidence_90">Confidence: 90%</string>
+    <string name="image_description">Image Description</string>nt
+    <string name="pest_name">Pest Name</string>
+    <string name="classified_image">Classified image</string>
+    <string name="pests">Pests</string>
+    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">A major rice pest that causes significant damage by folding and feeding on rice leaves, leading to reduced photosynthesis and yield loss.</string>
+    <string name="biological_characteristics">🔬 Biological Characteristics</string>
+    <string name="regions_affected">📍 Regions Affected</string>
+    <string name="view_on_inaturalist">View on iNaturalist</string>
+
+    <string name="login_successful">Login Successful!</string>
+    <string name="signup_successful">Signup Successful!</string>
+    <string name="share_results">Share Result</string>
+    <string name="related_pest_image">Related pest image</string>
+    <string name="cnaphalocrocis_medinalis">Cnaphalocrocis medinalis</string>
+    <string name="rice_leaf_roller">Rice Leaf-Roller</string>
+    <string name="inaturalist">iNaturalist</string>
+
 
     <string-array name="theme_entries">
         <item>System default</item>

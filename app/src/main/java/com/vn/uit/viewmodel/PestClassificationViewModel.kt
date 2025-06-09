@@ -38,6 +38,9 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
     private val _detectedPestName = MutableLiveData<String>()
     val detectedPestName: LiveData<String> = _detectedPestName
 
+    private val _confidenceScore = MutableLiveData<Float?>()
+    val confidenceScore: LiveData<Float?> = _confidenceScore
+
     @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
 
@@ -115,8 +118,11 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
         return expScores.map { (it / sumExpScores).toFloat() }.toFloatArray()
     }
 
-    fun classifyImage(bitmap: Bitmap) {
+    fun setConfidenceScore(confidence: Float) {
+        _confidenceScore.value = confidence
+    }
 
+    fun classifyImage(bitmap: Bitmap) {
         _classificationState.value = ClassificationState.Loading
 
         val softwareBitmap = convertToSoftwareBitmap(bitmap)
@@ -139,24 +145,35 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
                     val confidenceThreshold = 0.8f
                     val maxConfidence = outputProbabilities[maxIndex]
 
+                    // Set confidence score regardless of threshold
+                    _confidenceScore.value = maxConfidence
+
                     if (maxConfidence >= confidenceThreshold) {
                         val pestName = pestLabels[maxIndex]
                         _detectedPestName.value = pestName
                         _classificationState.value = ClassificationState.Success(pestName)
                     } else {
-                        _classificationState.value = ClassificationState.Error("Low confidence classification.")
+                        // Still show the best guess even if confidence is low
+                        val pestName = pestLabels[maxIndex]
+                        _detectedPestName.value = pestName
+                        _classificationState.value = ClassificationState.Success(pestName)
+
+                        // You might want to show a warning in the UI about low confidence
+                        Log.w(TAG, "Low confidence classification: $maxConfidence for $pestName")
                     }
                 } else {
+                    _confidenceScore.value = 0f
                     _classificationState.value = ClassificationState.Error("Unable to classify pest.")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Classification failed", e)
                 Log.v(TAG, "Exception details: ${e.message}", e)
+                _confidenceScore.value = null
                 _classificationState.value = ClassificationState.Error("Classification failed: ${e.message}")
             }
         }
-
     }
+
 
     fun setImageUri(uri: Uri) {
         try {
@@ -186,6 +203,7 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
         _capturedImageUri.value = null
         _processedImage.value = null
         _detectedPestName.value = null
+        _confidenceScore.value = null
     }
 
     fun setProcessedImage(bitmap: Bitmap) {

@@ -1,7 +1,6 @@
 package com.vn.uit.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
@@ -28,15 +27,25 @@ class ThemeHelper {
          * @param theme The theme option: "light", "dark", or "system"
          */
         fun setTheme(theme: String) {
-            when (theme) {
-                "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                else -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+            try {
+                when (theme) {
+                    "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    else -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                        }
                     }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // Fallback to system theme if there's an error
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
                 }
             }
         }
@@ -53,15 +62,23 @@ class ThemeHelper {
         }
 
         /**
-         * Save the selected theme to preferences
+         * Save the selected theme to preferences and apply it
          *
          * @param context The application context
          * @param theme The theme to save: "light", "dark", or "system"
+         * @return True if the theme was changed, false otherwise
          */
-        fun saveSelectedTheme(context: Context, theme: String) {
+        fun saveSelectedTheme(context: Context, theme: String): Boolean {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            sharedPreferences.edit().putString(THEME_PREF, theme).apply()
-            setTheme(theme)
+            val currentTheme = sharedPreferences.getString(THEME_PREF, THEME_DEFAULT) ?: THEME_DEFAULT
+
+            // Only change if the theme is different
+            if (theme != currentTheme) {
+                sharedPreferences.edit().putString(THEME_PREF, theme).apply()
+                setTheme(theme)
+                return true
+            }
+            return false
         }
     }
 }

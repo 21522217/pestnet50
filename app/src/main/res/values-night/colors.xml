@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Core Science Palette -->
+    <color name="primary">#2196F3</color> <!-- Science Blue -->
+    <color name="primary_dark">#0D47A1</color> <!-- Darker Science Blue -->
+    <color name="secondary">#00BCD4</color> <!-- Cyan -->
+    <color name="secondary_dark">#00838F</color> <!-- Deep Cyan -->
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Science-Themed Backgrounds -->
+    <color name="background">#0F1B2B</color> <!-- Space Blue -->
+    <color name="card_background">#1A273A</color> <!-- Deep blue-grey -->
+    <color name="text_primary">#E0F7FA</color> <!-- Soft white-blue -->
+    <color name="text_secondary">#B0BEC5</color> <!-- Muted silver -->
+
+    <!-- UI Supporting Colors -->
+    <color name="surface_dark">#1C2A3A</color> <!-- Surface blue-grey -->
+    <color name="on_surface_dark">#ECEFF1</color> <!-- Light text -->
+    <color name="outline_dark">#546E7A</color> <!-- Cool grey -->
+
+    <!-- Translucent overlays -->
+    <color name="white_translucent">#80FFFFFF</color>
+
+    <!-- UI Elements -->
+    <color name="editTextBackground">#263238</color> <!-- Charcoal Blue -->
+    <color name="buttonBackground">#1565C0</color> <!-- Vivid Blue -->
+    <color name="socialButtonBackground">#37474F</color> <!-- Slate Blue-Grey -->
+    <color name="dividerColor">#90A4AE</color> <!-- Light blue-grey -->
+
+    <!-- Social brand colors (unchanged) -->
+    <color name="googleRed">#EA4335</color>
+    <color name="facebookBlue">#1877F2</color>
+    <color name="othersOrange">#FF6D00</color>
+
+    <!-- Base colors -->
+    <color name="search_background">#1E2A38</color>
+    <color name="header_background">#283593</color> <!-- Indigo -->
+    <color name="accent_green">#00E676</color> <!-- Neon Green (tech accent) -->
+    <color name="confidence_background">#AA000000</color>
+    <color name="button_secondary">#37474F</color>
+    <color name="error_red">#D32F2F</color> <!-- Tech Red -->
+
+    <!-- Unused / placeholder colors -->
+    <color name="purple_200">#9FA8DA</color>
+    <color name="purple_700">#5C6BC0</color>
+    <color name="teal_200">#80DEEA</color>
+    <color name="teal_700">#00796B</color>
+</resources>

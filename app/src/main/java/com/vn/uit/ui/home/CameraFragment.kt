@@ -53,15 +53,10 @@ class CameraFragment : Fragment() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (ContextCompat.checkSelfPermission(
-                requireContext(), android.Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(android.Manifest.permission.CAMERA), 10
-            )
+            requestCameraPermission()
         }
 
         binding.captureButton.setOnClickListener {
@@ -69,11 +64,11 @@ class CameraFragment : Fragment() {
         }
 
         binding.flashButton.setOnClickListener {
-            flashEnabled = !flashEnabled
-            camera?.cameraControl?.enableTorch(flashEnabled)
-            binding.flashButton.setImageResource(
-                if (flashEnabled) R.drawable.ic_flash_on else R.drawable.ic_flash_off
-            )
+            toggleFlash()
+        }
+
+        binding.closeButton.setOnClickListener() {
+            findNavController().popBackStack()
         }
 
         binding.galleryButton.setOnClickListener {
@@ -82,27 +77,58 @@ class CameraFragment : Fragment() {
         }
     }
 
+    private fun allPermissionsGranted() = ContextCompat.checkSelfPermission(
+        requireContext(), android.Manifest.permission.CAMERA
+    ) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestCameraPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(android.Manifest.permission.CAMERA),
+            CAMERA_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    private fun toggleFlash() {
+        camera?.let {
+            flashEnabled = !flashEnabled
+            it.cameraControl.enableTorch(flashEnabled)
+            binding.flashButton.setImageResource(
+                if (flashEnabled) R.drawable.ic_flash_on else R.drawable.ic_flash_off
+            )
+        }
+    }
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
-
-            val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(binding.previewView.surfaceProvider)
-            }
-
-            imageCapture = ImageCapture.Builder().build()
-
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             try {
+                val cameraProvider = cameraProviderFuture.get()
+
+                val preview = Preview.Builder().build().also {
+                    it.setSurfaceProvider(binding.previewView.surfaceProvider)
+                }
+
+                imageCapture = ImageCapture.Builder()
+                    .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+                    .build()
+
+                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
                 cameraProvider.unbindAll()
                 camera = cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, preview, imageCapture
                 )
+
+                // Initialize flash button based on torch availability
+                camera?.cameraInfo?.hasFlashUnit()?.let { hasFlash ->
+                    binding.flashButton.visibility = if (hasFlash) View.VISIBLE else View.GONE
+                }
+
             } catch (exc: Exception) {
-                Toast.makeText(requireContext(), "Failed to start camera", Toast.LENGTH_SHORT)
+                Log.e(TAG, "Use case binding failed", exc)
+                Toast.makeText(requireContext(), "Failed to start camera: ${exc.message}", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -130,51 +156,52 @@ class CameraFragment : Fragment() {
             )
             .build()
 
+        // Show loading indicator or disable capture button
+        binding.captureButton.isEnabled = false
+
         imageCapture.takePicture(
             outputOptions,
-            cameraExecutor,
+            ContextCompat.getMainExecutor(requireContext()), // Use main executor instead of custom executor
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = output.savedUri
                     if (savedUri != null) {
-                        // Ensure navigation happens on the main thread
-                        requireActivity().runOnUiThread {
-                            // Navigate to ImageEditorFragment with the captured image URI
-                            viewModel.setImageUri(savedUri)  // Store URI in ViewModel
-                            findNavController().navigate(R.id.action_cameraFragment_to_imageEditorFragment)
-                        }
+                        Log.d(TAG, "Photo capture succeeded: $savedUri")
+                        // Store URI in ViewModel
+                        viewModel.setImageUri(savedUri)
+                        findNavController().navigate(R.id.action_cameraFragment_to_imageEditorFragment)
                     } else {
-                        requireActivity().runOnUiThread {
-                            Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
-                        }
+                        Log.e(TAG, "Photo capture succeeded but null URI returned")
+                        Toast.makeText(requireContext(), "Failed to save image", Toast.LENGTH_SHORT).show()
                     }
+                    binding.captureButton.isEnabled = true
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    Log.e("CameraX", "Image capture failed", exception)
-                    requireActivity().runOnUiThread {
-                        Toast.makeText(
-                            requireContext(),
-                            "Capture failed: ${exception.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    Log.e(TAG, "Photo capture failed: ${exception.message}", exception)
+                    Toast.makeText(
+                        requireContext(),
+                        "Capture failed: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    binding.captureButton.isEnabled = true
                 }
             }
         )
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 10) {
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCamera()
             } else {
-                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Camera permission is required to use the camera", Toast.LENGTH_LONG).show()
+                // Consider navigating back or to another fragment that doesn't require camera
             }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 
@@ -182,5 +209,10 @@ class CameraFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         cameraExecutor.shutdown()
+    }
+
+    companion object {
+        private const val TAG = "CameraFragment"
+        private const val CAMERA_PERMISSION_REQUEST_CODE = 10
     }
 }

@@ -1,246 +1,185 @@
 package com.vn.uit.ui.history
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.vn.uit.R
-import com.vn.uit.ui.history.HistoryAdapter
-import com.vn.uit.ui.history.PestAdapter
-import com.vn.uit.ui.history.HistoryItem
-import com.vn.uit.ui.history.PestItem
+import com.vn.uit.databinding.FragmentHistoryBinding
+import com.vn.uit.model.ClassificationResponse
+import com.vn.uit.repository.HistoryRepository
+import com.vn.uit.ui.dialog.ClassificationDetailDialogFragment
+import kotlinx.coroutines.launch
+import java.time.Instant
 import java.util.UUID
-import java.util.Date
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var searchEditText: EditText
-    private lateinit var recentRecyclerView: RecyclerView
-    private lateinit var bestAccuracyRecyclerView: RecyclerView
-    private lateinit var mostDetectedPestsRecyclerView: RecyclerView
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
 
-    // Adapters
-    private lateinit var recentAdapter: HistoryAdapter
-    private lateinit var bestAccuracyAdapter: HistoryAdapter
-    private lateinit var pestAdapter: PestAdapter
-
-    // Mock data lists
-    private val recentItems = mutableListOf<HistoryItem>()
-    private val bestAccuracyItems = mutableListOf<HistoryItem>()
-    private val pestItems = mutableListOf<PestItem>()
+    private lateinit var recentAdapter: ClassificationAdapter
+    private lateinit var bestAccuracyAdapter: ClassificationAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_history, container, false)
-
-        // Initialize views
-        searchEditText = root.findViewById(R.id.searchEditText)
-        recentRecyclerView = root.findViewById(R.id.recentRecyclerView)
-        bestAccuracyRecyclerView = root.findViewById(R.id.bestAccuracyRecyclerView)
-        mostDetectedPestsRecyclerView = root.findViewById(R.id.mostDetectedPestsRecyclerView)
-
-        setupAdapters()
-        setupSearchBar()
-        loadMockData()
-
-        return root
+    ): View {
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun setupAdapters() {
-        // Set up Recent adapter
-        recentAdapter = HistoryAdapter(recentItems) { item ->
-            showImageDetailDialog(item)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerViews()
+        setupClickListeners()
+        loadData()
+    }
+
+    private fun setupRecyclerViews() {
+        recentAdapter = ClassificationAdapter(emptyList()) { classification ->
+            openClassificationDetailDialog(classification)
         }
-        recentRecyclerView.apply {
+        binding.recentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = recentAdapter
         }
 
-        // Set up Best Accuracy adapter
-        bestAccuracyAdapter = HistoryAdapter(bestAccuracyItems) { item ->
-            showImageDetailDialog(item)
+        bestAccuracyAdapter = ClassificationAdapter(emptyList()) { classification ->
+            openClassificationDetailDialog(classification)
         }
-        bestAccuracyRecyclerView.apply {
+        binding.bestAccuracyRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = bestAccuracyAdapter
         }
-
-        // Set up Pest adapter
-        pestAdapter = PestAdapter(pestItems) { item ->
-            showPestDetailDialog(item)
-        }
-        mostDetectedPestsRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = pestAdapter
-        }
     }
 
-    private fun setupSearchBar() {
-        searchEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Implement search functionality
-                filterData(s.toString())
+    private fun setupClickListeners() {
+        binding.searchEditText.setOnEditorActionListener { _, _, _ ->
+            val query = binding.searchEditText.text.toString().trim()
+            if (query.isNotEmpty()) {
+                searchClassifications(query)
             }
+            true
+        }
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.viewAllRecent.setOnClickListener {
+            showToast("View all recent scans clicked")
+        }
+
+        binding.viewAllAccuracy.setOnClickListener {
+            showToast("View all best accuracy clicked")
+        }
+
+        binding.scanFab.setOnClickListener {
+            showToast("Scan button clicked")
+        }
     }
 
-    private fun filterData(query: String) {
-        // Filter recent items
-        val filteredRecentItems = if (query.isEmpty()) {
-            recentItems
-        } else {
-            recentItems.filter { it.originalName.contains(query, ignoreCase = true) }
+    private fun loadData() {
+        lifecycleScope.launch {
+            try {
+                recentAdapter.submitList(createMockClassifications())
+            } catch (e: Exception) {
+                showToast("Error loading recent scans")
+            }
         }
-        recentAdapter.updateItems(filteredRecentItems)
 
-        // Filter best accuracy items
-        val filteredBestAccuracyItems = if (query.isEmpty()) {
-            bestAccuracyItems
-        } else {
-            bestAccuracyItems.filter { it.originalName.contains(query, ignoreCase = true) }
+        lifecycleScope.launch {
+            try {
+                bestAccuracyAdapter.submitList(createMockClassifications())
+            } catch (e: Exception) {
+                showToast("Error loading best accuracy results")
+            }
         }
-        bestAccuracyAdapter.updateItems(filteredBestAccuracyItems)
-
-        // Filter pest items
-        val filteredPestItems = if (query.isEmpty()) {
-            pestItems
-        } else {
-            pestItems.filter { it.name.contains(query, ignoreCase = true) }
-        }
-        pestAdapter.updateItems(filteredPestItems)
     }
 
-    private fun loadMockData() {
-        // Mock data for Recent
-        recentItems.addAll(
-            listOf(
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/200/200",
-                    Date(),
-                    "image1.jpg"
-                ),
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/201/201",
-                    Date(),
-                    "image2.jpg"
-                ),
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/202/202",
-                    Date(),
-                    "image3.jpg"
-                )
+    private fun searchClassifications(query: String) {
+        lifecycleScope.launch {
+            try {
+                showToast("Searching for: $query")
+            } catch (e: Exception) {
+                showToast("Search error")
+            }
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createMockClassifications(): List<ClassificationResponse> {
+        val now = System.currentTimeMillis()
+        return listOf(
+            ClassificationResponse(
+                classificationId = UUID.randomUUID(),
+                pestId = UUID.randomUUID(),
+                pestName = "Aphid",
+                modelName = "PestNet v1.0",
+                confidence = 0.95f,
+                classifiedAt = Instant.ofEpochMilli(now),
+                imageUrl = "https://example.com/aphid.jpg",
+                pestRegions = listOf("Asia", "Europe"),
+                pestScientificName = "Aphis gossypii",
+                pestDescription = "Aphids are small sap-sucking insects.",
+                pestImageUrl = "https://example.com/aphid_pest.jpg",
+                pestUrl = "https://en.wikipedia.org/wiki/Aphid",
+                pestInsecticide = listOf("Insecticide A", "Insecticide B")
+            ),
+            ClassificationResponse(
+                classificationId = UUID.randomUUID(),
+                pestId = UUID.randomUUID(),
+                pestName = "Spider Mite",
+                modelName = "PestNet v1.0",
+                confidence = 0.88f,
+                classifiedAt = Instant.ofEpochMilli(now - 86_400_000L),
+                imageUrl = "https://example.com/spidermite.jpg",
+                pestRegions = listOf("North America"),
+                pestScientificName = "Tetranychus urticae",
+                pestDescription = "Spider mites are tiny arachnids that feed on plants with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things like larva katana Lorem ipsum myth asteroid naga sea of doom by my hand.",
+                pestImageUrl = "https://example.com/spidermite_pest.jpg",
+                pestUrl = "https://en.wikipedia.org/wiki/Spider_mite",
+                pestInsecticide = listOf("Insecticide C")
+            ),
+            ClassificationResponse(
+                classificationId = UUID.randomUUID(),
+                pestId = UUID.randomUUID(),
+                pestName = "Whitefly",
+                modelName = "PestNet v1.0",
+                confidence = 0.92f,
+                classifiedAt = Instant.ofEpochMilli(now - 172_800_000L),
+                imageUrl = "https://example.com/whitefly.jpg",
+                pestRegions = listOf("Africa", "South America"),
+                pestScientificName = "Bemisia tabaci",
+                pestDescription = "Whiteflies are small hemipterans that feed on plant sap.",
+                pestImageUrl = "https://example.com/whitefly_pest.jpg",
+                pestUrl = "https://en.wikipedia.org/wiki/Whitefly",
+                pestInsecticide = listOf("Insecticide D", "Insecticide E")
             )
         )
-        recentAdapter.notifyDataSetChanged()
-
-        // Mock data for Best Accuracy
-        bestAccuracyItems.addAll(
-            listOf(
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/203/203",
-                    Date(),
-                    "high_accuracy1.jpg",
-                    0.98f
-                ),
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/204/204",
-                    Date(),
-                    "high_accuracy2.jpg",
-                    0.97f
-                ),
-                HistoryItem(
-                    UUID.randomUUID().toString(),
-                    "https://placekitten.com/205/205",
-                    Date(),
-                    "high_accuracy3.jpg",
-                    0.95f
-                )
-            )
-        )
-        bestAccuracyAdapter.notifyDataSetChanged()
-
-        // Mock data for Most Detected Pests
-        pestItems.addAll(
-            listOf(
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Aphid",
-                    "Aphidoidea",
-                    "https://placekitten.com/100/100",
-                    15,
-                    "Small sap-sucking insects often found on crops."
-                ),
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Spider Mite",
-                    "Tetranychidae",
-                    "https://placekitten.com/101/101",
-                    12,
-                    "Tiny arachnids that feed on plant tissues."
-                ),
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Whitefly",
-                    "Aleyrodidae",
-                    "https://placekitten.com/102/102",
-                    10,
-                    "Small white-winged insects that suck plant juices."
-                ),
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Thrips",
-                    "Thysanoptera",
-                    "https://placekitten.com/103/103",
-                    8,
-                    "Slender insects that damage plants by feeding on them."
-                ),
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Scale Insect",
-                    "Coccoidea",
-                    "https://placekitten.com/104/104",
-                    7,
-                    "Insects that attach to plant stems and suck sap."
-                ),
-                PestItem(
-                    UUID.randomUUID().toString(),
-                    "Mealybug",
-                    "Pseudococcidae",
-                    "https://placekitten.com/105/105",
-                    5,
-                    "Soft-bodied pests covered with a white waxy material."
-                )
-            )
-        )
-        pestAdapter.notifyDataSetChanged()
     }
 
-    private fun showImageDetailDialog(item: HistoryItem) {
-        val dialog = ImageDetailDialogFragment.newInstance(item.id)
-        dialog.show(childFragmentManager, "ImageDetailDialog")
+    private fun openClassificationDetailDialog(classification: ClassificationResponse) {
+        val relatedImages = listOf<String>() // Add URLs if you want to show related images
+        val dialog = ClassificationDetailDialogFragment(
+            classification = classification,
+            relatedImages = relatedImages,
+            onShare = {
+                Toast.makeText(requireContext(), "Sharing classification...", Toast.LENGTH_SHORT).show()
+            },
+            onRemove = {
+                Toast.makeText(requireContext(), "Classification removed", Toast.LENGTH_SHORT).show()
+            }
+        )
+        dialog.show(parentFragmentManager, "ClassificationDetailDialog")
     }
 
-    private fun showPestDetailDialog(item: PestItem) {
-        val dialog = PestDetailDialogFragment.newInstance(item.id)
-        dialog.show(childFragmentManager, "PestDetailDialog")
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
