@@ -125,10 +125,8 @@
     <string name="choose_from_device_gallery">Choose from Device Gallery</string>
     <string name="take_a_photo">Take a Photo</string>
     <string name="choose_from_gallery">Choose from Gallery</string>
-    <string name="unknown_pest">Unknown Pest</string>
     <string name="scientific_name_unavailable">Scientific name unavailable</string>
     <string name="description_unavailable">No description available</string>
-    <string name="confidence_percentage">%d%% confidence</string>
     <string name="date_unavailable">Date unavailable</string>
     <string name="filename_unavailable">Unknown file</string>
     <string name="pest_image">Pest image</string>
@@ -137,7 +135,6 @@
     <string name="remove_result">Remove result</string>
     <string name="confidence_90">Confidence: 90%</string>
     <string name="image_description">Image Description</string>nt
-    <string name="pest_name">Pest Name</string>
     <string name="classified_image">Classified image</string>
     <string name="pests">Pests</string>
     <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">A major rice pest that causes significant damage by folding and feeding on rice leaves, leading to reduced photosynthesis and yield loss.</string>
@@ -147,12 +144,32 @@
 
     <string name="login_successful">Login Successful!</string>
     <string name="signup_successful">Signup Successful!</string>
-    <string name="share_results">Share Result</string>
     <string name="related_pest_image">Related pest image</string>
     <string name="cnaphalocrocis_medinalis">Cnaphalocrocis medinalis</string>
     <string name="rice_leaf_roller">Rice Leaf-Roller</string>
     <string name="inaturalist">iNaturalist</string>
+    <string name="uit_pest_classification">UIT Pest Classification</string>
+    <string name="version_1_0">Version 1.0</string>
+    <string name="app_logo">App logo</string>
+    <string name="confidence_percentage">%d%% Confidence</string>
+    <string name="unknown_pest">Unknown Pest</string>
+    <string name="no_treatment_info">No treatment information available</string>
+    <string name="no_url_available">No additional information URL available</string>
+    <string name="no_browser_available">No browser app available</string>
+    <string name="error_opening_url">Error opening URL</string>
+    <string name="pest_identification_result">Pest Identification Result</string>
+    <string name="error_sharing">Error sharing result</string>
+    <string name="insecticide_icon">Insecticide icon</string>
 
+    <!-- Share Text Strings -->
+    <string name="share_header">🔍 Pest Identification Result</string>
+    <string name="pest_name">Pest</string>
+    <string name="scientific_name">Scientific Name</string>
+    <string name="confidence">Confidence</string>
+    <string name="detected_on">Detected On</string>
+    <string name="regions">Regions</string>
+    <string name="app_signature">Shared via Pest Detection App</string>
+    <string name="share_results">Share Results</string>
 
     <string-array name="theme_entries">
         <item>System default</item>

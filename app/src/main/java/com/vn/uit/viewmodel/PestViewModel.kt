@@ -31,14 +31,61 @@ class PestViewModel(
                     _uiState.value = _uiState.value.copy(
                         pests = pestPage.pests,
                         filteredPests = pestPage.pests,
-                        isLoading = false
+                        currentPage = 0,
+                        totalPages = pestPage.pagination.totalPages,
+                        isLastPage = pestPage.pagination.last,
+                        isLoading = false,
+                        isRefreshing = false
                     )
+
+                    // Apply current search filter if any
+                    val currentQuery = _uiState.value.searchQuery
+                    if (currentQuery.isNotBlank()) {
+                        searchPests(currentQuery)
+                    }
                 } else {
-                    _uiState.value = _uiState.value.copy(isLoading = false)
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
                 }
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(isLoading = false)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    isRefreshing = false
+                )
                 // Log error for debugging
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun refreshPests() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isRefreshing = true)
+            try {
+                val result = pestRepository.getAllPests()
+                if (result.isSuccess) {
+                    val pestPage = result.getOrThrow()
+                    _uiState.value = _uiState.value.copy(
+                        pests = pestPage.pests,
+                        filteredPests = pestPage.pests,
+                        currentPage = 0,
+                        totalPages = pestPage.pagination.totalPages,
+                        isLastPage = pestPage.pagination.last,
+                        isRefreshing = false
+                    )
+
+                    // Apply current search filter if any
+                    val currentQuery = _uiState.value.searchQuery
+                    if (currentQuery.isNotBlank()) {
+                        searchPests(currentQuery)
+                    }
+                } else {
+                    _uiState.value = _uiState.value.copy(isRefreshing = false)
+                }
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isRefreshing = false)
                 e.printStackTrace()
             }
         }
@@ -57,7 +104,12 @@ class PestViewModel(
                     val updatedList = _uiState.value.pests + pestPage.pests
                     _uiState.value = _uiState.value.copy(
                         pests = updatedList,
-                        filteredPests = updatedList,
+                        filteredPests = if (_uiState.value.searchQuery.isBlank()) {
+                            updatedList
+                        } else {
+                            // Re-apply search filter to updated list
+                            filterPests(updatedList, _uiState.value.searchQuery)
+                        },
                         currentPage = nextPage,
                         totalPages = pestPage.pagination.totalPages,
                         isLastPage = pestPage.pagination.last,
@@ -77,12 +129,7 @@ class PestViewModel(
         val filteredPests = if (query.isBlank()) {
             _uiState.value.pests
         } else {
-            _uiState.value.pests.filter { pest ->
-                val nameMatches = pest.name?.contains(query, ignoreCase = true) == true
-                val scientificNameMatches = pest.scientificName?.contains(query, ignoreCase = true) == true
-                val regionMatches = pest.regions?.any { it.contains(query, ignoreCase = true) } == true
-                nameMatches || scientificNameMatches || regionMatches
-            }
+            filterPests(_uiState.value.pests, query)
         }
 
         _uiState.value = _uiState.value.copy(
@@ -91,12 +138,22 @@ class PestViewModel(
         )
     }
 
+    private fun filterPests(pests: List<Pest>, query: String): List<Pest> {
+        return pests.filter { pest ->
+            val nameMatches = pest.name?.contains(query, ignoreCase = true) == true
+            val scientificNameMatches = pest.scientificName?.contains(query, ignoreCase = true) == true
+            val regionMatches = pest.regions?.any { it.contains(query, ignoreCase = true) } == true
+            nameMatches || scientificNameMatches || regionMatches
+        }
+    }
+
     fun showPestDetails(pest: Pest) {
         _uiState.value = _uiState.value.copy(
             selectedPest = pest,
             showDialog = true
         )
     }
+
     fun hidePestDetails() {
         _uiState.value = _uiState.value.copy(
             selectedPest = null,

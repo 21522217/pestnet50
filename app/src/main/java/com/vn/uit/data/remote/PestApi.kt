@@ -2,6 +2,7 @@ package com.vn.uit.data.remote
 
 import com.vn.uit.model.Pest
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -24,4 +25,9 @@ interface PestApi {
     suspend fun getPestByScientificName(
         @Path("scientificName") scientificName: String
     ): ApiResponse<Pest>
+
+
+    @PATCH("pests/{scientificName}/increment-occurrence")
+    suspend fun increasePestOccurrence(@Path("scientificName") scientificName: String): ApiResponse<Pest>
+
 }

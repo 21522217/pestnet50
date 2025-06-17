@@ -46,16 +46,16 @@ class PestRepository(
         }
     }
 
-    suspend fun fetchPestByScientificName(name: String): Pest? {
+    suspend fun increasePestOccurrence(scientificName: String): Result<Pest> {
         return try {
-            val response = ApiClient.pestApi.getPestByScientificName(name)
-            if (response.status === 200) {
-                response.data
+            val response = pestApi.increasePestOccurrence(scientificName)
+            if (response.status == 200 && response.data != null) {
+                Result.success(response.data)
             } else {
-                null
+                Result.failure(Exception(response.message ?: "Failed to increase occurrence count"))
             }
         } catch (e: Exception) {
-            null
+            Result.failure(e)
         }
     }
 }

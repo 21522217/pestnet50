@@ -16,7 +16,6 @@ import com.vn.uit.R
 import com.vn.uit.databinding.PestDetailDialogBinding
 import com.vn.uit.model.Pest
 import com.vn.uit.model.HarmLevel
-import java.util.Locale
 
 class PestDetailDialog : DialogFragment() {
 
@@ -76,23 +75,19 @@ class PestDetailDialog : DialogFragment() {
             pestName.text = pest.name ?: "Unknown Pest"
             pestScientificName.text = pest.scientificName ?: "Scientific name not available"
             pestDescription.text = pest.description ?: "No description available"
-            pestImage.load(pest.pestUrl) {
-                placeholder(R.drawable.placeholder_image)
-                error(R.drawable.image_placeholder)
+
+            val imageUrl = pest.relatedImages.firstOrNull()
+            if (imageUrl != null) {
+                pestImage.load(imageUrl) {
+                    placeholder(R.drawable.placeholder_image)
+                    error(R.drawable.image_placeholder)
+                }
+            } else {
+                pestImage.load(R.drawable.placeholder_image)
             }
         }
     }
 
-    private fun String?.toHarmLevel(): HarmLevel? {
-        return when (this?.lowercase(Locale.getDefault())) {
-            "very low" -> HarmLevel.VERY_LOW
-            "low" -> HarmLevel.LOW
-            "medium", "moderate" -> HarmLevel.MODERATE
-            "high" -> HarmLevel.HIGH
-            "very high" -> HarmLevel.VERY_HIGH
-            else -> null
-        }
-    }
 
     private fun setupHarmLevelBadge(pest: Pest) {
         binding.harmLevelBadge.apply {
@@ -180,7 +175,7 @@ class PestDetailDialog : DialogFragment() {
     }
 
     private fun setupRelatedImages(pest: Pest) {
-        val relatedImages = pest.relatedImages ?: emptyList()
+        val relatedImages = pest.relatedImages
         if (relatedImages.isNotEmpty()) {
             val adapter = RelatedImagesAdapter(relatedImages) { imageUrl ->
                 openImageFullScreen(imageUrl)

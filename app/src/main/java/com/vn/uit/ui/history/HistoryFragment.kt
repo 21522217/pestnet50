@@ -10,14 +10,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.uit.databinding.FragmentHistoryBinding
 import com.vn.uit.model.ClassificationResponse
-import com.vn.uit.repository.HistoryRepository
+import com.vn.uit.repository.ClassificationRepository
 import com.vn.uit.ui.dialog.ClassificationDetailDialogFragment
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.util.UUID
 
 class HistoryFragment : Fragment() {
 
+    private val classificationRepository = ClassificationRepository()
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
 
@@ -83,20 +82,23 @@ class HistoryFragment : Fragment() {
     private fun loadData() {
         lifecycleScope.launch {
             try {
-                recentAdapter.submitList(createMockClassifications())
+                val recent = classificationRepository.getRecentClassifications()
+                recentAdapter.submitList(recent)
             } catch (e: Exception) {
-                showToast("Error loading recent scans")
+                showToast("Error loading recent scans: ${e.message}")
             }
         }
 
         lifecycleScope.launch {
             try {
-                bestAccuracyAdapter.submitList(createMockClassifications())
+                val best = classificationRepository.getRecentClassifications()
+                bestAccuracyAdapter.submitList(best)
             } catch (e: Exception) {
-                showToast("Error loading best accuracy results")
+                showToast("Error loading best accuracy results: ${e.message}")
             }
         }
     }
+
 
     private fun searchClassifications(query: String) {
         lifecycleScope.launch {
@@ -110,57 +112,6 @@ class HistoryFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun createMockClassifications(): List<ClassificationResponse> {
-        val now = System.currentTimeMillis()
-        return listOf(
-            ClassificationResponse(
-                classificationId = UUID.randomUUID(),
-                pestId = UUID.randomUUID(),
-                pestName = "Aphid",
-                modelName = "PestNet v1.0",
-                confidence = 0.95f,
-                classifiedAt = Instant.ofEpochMilli(now),
-                imageUrl = "https://example.com/aphid.jpg",
-                pestRegions = listOf("Asia", "Europe"),
-                pestScientificName = "Aphis gossypii",
-                pestDescription = "Aphids are small sap-sucking insects.",
-                pestImageUrl = "https://example.com/aphid_pest.jpg",
-                pestUrl = "https://en.wikipedia.org/wiki/Aphid",
-                pestInsecticide = listOf("Insecticide A", "Insecticide B")
-            ),
-            ClassificationResponse(
-                classificationId = UUID.randomUUID(),
-                pestId = UUID.randomUUID(),
-                pestName = "Spider Mite",
-                modelName = "PestNet v1.0",
-                confidence = 0.88f,
-                classifiedAt = Instant.ofEpochMilli(now - 86_400_000L),
-                imageUrl = "https://example.com/spidermite.jpg",
-                pestRegions = listOf("North America"),
-                pestScientificName = "Tetranychus urticae",
-                pestDescription = "Spider mites are tiny arachnids that feed on plants with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things with a lot of unhealthy things like larva katana Lorem ipsum myth asteroid naga sea of doom by my hand.",
-                pestImageUrl = "https://example.com/spidermite_pest.jpg",
-                pestUrl = "https://en.wikipedia.org/wiki/Spider_mite",
-                pestInsecticide = listOf("Insecticide C")
-            ),
-            ClassificationResponse(
-                classificationId = UUID.randomUUID(),
-                pestId = UUID.randomUUID(),
-                pestName = "Whitefly",
-                modelName = "PestNet v1.0",
-                confidence = 0.92f,
-                classifiedAt = Instant.ofEpochMilli(now - 172_800_000L),
-                imageUrl = "https://example.com/whitefly.jpg",
-                pestRegions = listOf("Africa", "South America"),
-                pestScientificName = "Bemisia tabaci",
-                pestDescription = "Whiteflies are small hemipterans that feed on plant sap.",
-                pestImageUrl = "https://example.com/whitefly_pest.jpg",
-                pestUrl = "https://en.wikipedia.org/wiki/Whitefly",
-                pestInsecticide = listOf("Insecticide D", "Insecticide E")
-            )
-        )
     }
 
     private fun openClassificationDetailDialog(classification: ClassificationResponse) {

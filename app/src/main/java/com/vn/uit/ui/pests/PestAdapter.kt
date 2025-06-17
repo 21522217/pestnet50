@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.vn.uit.R
 import com.vn.uit.databinding.ItemPestBinding
 import com.vn.uit.model.Pest
 
@@ -28,7 +29,10 @@ class PestAdapter(
         fun bind(pest: Pest) {
             binding.pestNameTextView.text = pest.name
             binding.occurrenceTextView.text = pest.occurrenceCount.toString()
-            binding.pestImageView.load(pest.pestUrl)
+            binding.pestImageView.load(pest.relatedImages?.firstOrNull().orEmpty()) {
+                placeholder(R.drawable.placeholder_image)
+                error(R.drawable.image_placeholder)
+            }
             binding.root.setOnClickListener { onItemClick(pest) }
         }
     }

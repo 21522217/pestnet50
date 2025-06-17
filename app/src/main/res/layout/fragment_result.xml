@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,8 +10,11 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/actionButtonsContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,12 +24,11 @@
             <!-- Image Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/imageCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/card_background"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="6dp"
-                app:cardUseCompatPadding="true"
                 app:strokeColor="@color/outline_dark"
                 app:strokeWidth="1dp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +42,7 @@
                     <ImageView
                         android:id="@+id/resultImageView"
                         android:layout_width="0dp"
-                        android:layout_height="280dp"
+                        android:layout_height="240dp"
                         android:scaleType="centerCrop"
                         android:contentDescription="@string/detected_pest_image"
                         android:background="@color/surface_dark"
@@ -49,56 +51,59 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
-                    <LinearLayout
+                    <!-- Confidence Badge -->
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/confidence_badge_background"
-                        android:backgroundTint="@color/primary"
-                        android:padding="12dp"
-                        android:layout_margin="16dp"
-                        android:elevation="2dp"
+                        android:layout_margin="12dp"
+                        app:cardBackgroundColor="@color/primary"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:orientation="horizontal">
+                        app:layout_constraintEnd_toEndOf="parent">
 
                         <TextView
                             android:id="@+id/confidenceTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
+                            android:padding="8dp"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
                             tools:text="95% Confidence"
-                            app:drawableStartCompat="@drawable/ic_check_circle" />
-                    </LinearLayout>
+                            app:drawableStartCompat="@drawable/ic_check_circle"
+                            app:drawableTint="@android:color/white" />
+                    </com.google.android.material.card.MaterialCardView>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Identification Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/identificationCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/card_background"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardUseCompatPadding="true"
                 app:strokeColor="@color/secondary"
                 app:strokeWidth="1dp"
                 app:layout_constraintTop_toBottomOf="@id/imageCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="20dp">
 
                     <TextView
                         android:id="@+id/resultTitleTextDetected"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/detected_pest"
                         android:textSize="16sp"
@@ -106,47 +111,35 @@
                         android:textStyle="bold"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:drawableStartCompat="@drawable/ic_bug"
                         app:drawableTint="@color/primary" />
 
                     <TextView
                         android:id="@+id/pestNameTextView"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:textSize="26sp"
+                        android:textSize="24sp"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"
-                        app:layout_constraintTop_toBottomOf="@id/resultTitleTextDetected"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         tools:text="Brown Plant Hopper" />
 
                     <TextView
                         android:id="@+id/scientificNameTextView"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textSize="16sp"
                         android:textStyle="italic"
                         android:textColor="@color/text_secondary"
-                        app:layout_constraintTop_toBottomOf="@id/pestNameTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         tools:text="Nilaparvata lugens" />
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/regionsChipGroup"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        app:chipSpacingHorizontal="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/scientificNameTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:chipSpacingHorizontal="8dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/learnMoreButton"
@@ -154,41 +147,45 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_gravity="end"
                         android:text="@string/learn_more"
-                        android:backgroundTint="@color/secondary"
-                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:textSize="14sp"
+                        android:textColor="@color/surface_dark"
+                        android:minHeight="48dp"
+                        android:paddingHorizontal="16dp"
+                        app:cornerRadius="8dp"
                         app:icon="@drawable/ic_open_in_browser"
-                        app:iconTint="@color/white"
-                        app:layout_constraintTop_toBottomOf="@id/regionsChipGroup"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:iconTint="@color/surface_dark"
+                        app:iconSize="20dp" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Treatment Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/treatmentCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/surface_dark"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardUseCompatPadding="true"
                 app:strokeColor="@color/accent_green"
                 app:strokeWidth="2dp"
                 app:layout_constraintTop_toBottomOf="@id/identificationCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="20dp">
 
                     <TextView
                         android:id="@+id/treatmentTitleTextPest"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/treatment_options"
                         android:textSize="16sp"
@@ -196,52 +193,47 @@
                         android:textStyle="bold"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:drawableStartCompat="@drawable/ic_medical_service"
                         app:drawableTint="@color/accent_green" />
 
                     <TextView
                         android:id="@+id/treatmentTextView"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:textSize="16sp"
                         android:lineSpacingExtra="4dp"
                         android:textColor="@color/on_surface_dark"
-                        app:layout_constraintTop_toBottomOf="@id/treatmentTitleTextPest"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         tools:text="1. Chemical control: Use pesticides containing X, Y, Z\n2. Biological control: Introduce natural predators\n3. Cultural practices: Adjust planting time and spacing" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Insecticides Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/insecticidesCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 app:cardBackgroundColor="@color/card_background"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardUseCompatPadding="true"
                 app:strokeColor="@color/primary"
                 app:strokeWidth="1dp"
                 app:layout_constraintTop_toBottomOf="@id/treatmentCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="20dp">
 
                     <TextView
                         android:id="@+id/insecticideTitleText"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/recommended_insecticides"
                         android:textSize="16sp"
@@ -249,58 +241,77 @@
                         android:textStyle="bold"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:drawableStartCompat="@drawable/ic_science"
                         app:drawableTint="@color/primary" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/insecticidesRecyclerView"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintTop_toBottomOf="@id/insecticideTitleText"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:nestedScrollingEnabled="false" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- Action Buttons -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/shareResultButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/share_results"
-                android:backgroundTint="@color/buttonBackground"
-                android:textColor="@color/white"
-                app:icon="@drawable/ic_share"
-                app:iconTint="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/insecticidesCard"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/newScanButton"
-                app:layout_constraintWidth_percent="0.48" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/newScanButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/new_scan"
-                android:textColor="@color/primary"
-                app:strokeColor="@color/primary"
-                app:strokeWidth="2dp"
-                app:icon="@drawable/baseline_photo_camera_24"
-                app:iconTint="@color/primary"
-                app:layout_constraintTop_toBottomOf="@id/insecticidesCard"
-                app:layout_constraintStart_toEndOf="@id/shareResultButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.48" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Bottom Buttons - FIXED -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/actionButtonsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:elevation="8dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareResultButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/share_results"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:minHeight="48dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_share"
+            app:iconSize="20dp"
+            app:iconGravity="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/newScanButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/newScanButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/new_scan"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:textColor="@color/primary"
+            android:minHeight="48dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="2dp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/baseline_photo_camera_24"
+            app:iconTint="@color/primary"
+            app:iconSize="20dp"
+            app:iconGravity="textStart"
+            app:layout_constraintStart_toEndOf="@id/shareResultButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

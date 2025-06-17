@@ -54,6 +54,11 @@
             app:destination="@id/nav_home"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
+
+        <argument
+            android:name="result"
+            app:argType="com.vn.uit.model.ClassificationResponse"
+            />
     </fragment>
 
     <!-- Gallery Screen -->
@@ -80,7 +85,7 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.vn.uit.ui.settings.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
 
     <!-- Gallery Fragment from Camera flow -->

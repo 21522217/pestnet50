@@ -92,9 +92,8 @@ class ClassificationDetailDialogFragment(
     }
 
     private fun setupViews() {
-        // Load main classified image (fallback to pestImageUrl)
         val imageUrl = classification.imageUrl.ifBlank {
-            classification.pestImageUrl ?: ""
+            classification.pestUrl ?: ""
         }
         imageViewClassified.load(imageUrl) {
             crossfade(true)
@@ -111,7 +110,7 @@ class ClassificationDetailDialogFragment(
 
         val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
             .withZone(ZoneId.systemDefault())
-        textViewClassifiedAt.text = "Classified at: ${formatter.format(classification.classifiedAt)}"
+        textViewClassifiedAt.text = "Classified at: ${classification.classifiedAt}}"
 
         val regionsText = classification.pestRegions?.joinToString(", ") ?: "Unknown regions"
         textViewPestRegions.text = "Regions: $regionsText"
@@ -138,14 +137,11 @@ class ClassificationDetailDialogFragment(
             textViewPestUrl.isVisible = false
         }
 
-        // Setup related images RecyclerView using your existing ClassificationAdapter
         if (relatedImages.isNotEmpty()) {
             relatedImagesRecycler.isVisible = true
             relatedImagesRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            // Create ClassificationResponse list with imageUrl only for related images
             val relatedClassifications = relatedImages.map {
                 ClassificationResponse(
-                    classificationId = classification.classificationId, // reuse or generate new UUID if needed
                     imageUrl = it,
                     confidence = 0f,
                     modelName = "",
@@ -153,15 +149,13 @@ class ClassificationDetailDialogFragment(
                     pestId = classification.pestId,
                     pestName = "",
                     pestRegions = null,
-                    pestScientificName = null,
+                    pestScientificName = "",
                     pestDescription = null,
-                    pestImageUrl = null,
                     pestUrl = null,
                     pestInsecticide = null
                 )
             }
             val adapter = ClassificationAdapter(relatedClassifications) {
-                // On related image click: maybe show full image or do nothing
                 Toast.makeText(requireContext(), "Clicked related image", Toast.LENGTH_SHORT).show()
             }
             relatedImagesRecycler.adapter = adapter

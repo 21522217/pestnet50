@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.vn.uit.R
 import com.vn.uit.databinding.FragmentImageEditorBinding
 import com.vn.uit.viewmodel.PestClassificationViewModel
-import androidx.lifecycle.Observer
 
 class ImageEditorFragment : Fragment() {
 
@@ -27,9 +26,9 @@ class ImageEditorFragment : Fragment() {
             }
             is PestClassificationViewModel.ClassificationState.Success -> {
                 binding.progressBar.visibility = View.GONE
-                findNavController().navigate(
-                    R.id.action_imageEditorFragment_to_resultFragment
-                )
+                val action = ImageEditorFragmentDirections
+                    .actionImageEditorFragmentToResultFragment(state.result)
+                findNavController().navigate(action)
             }
             is PestClassificationViewModel.ClassificationState.Error -> {
                 binding.progressBar.visibility = View.GONE
@@ -41,9 +40,7 @@ class ImageEditorFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentImageEditorBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,10 +48,8 @@ class ImageEditorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize the UI state
         binding.progressBar.visibility = View.GONE
 
-        // Observe processed image and set to cropper
         viewModel.processedImage.observe(viewLifecycleOwner) { bitmap ->
             if (bitmap != null) {
                 binding.imageCropper.setImageBitmap(bitmap)
@@ -65,17 +60,12 @@ class ImageEditorFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            try {
-                val croppedBitmap = binding.imageCropper.croppedImage
-                if (croppedBitmap != null) {
-                    // Store the cropped image before classification
-                    viewModel.setProcessedImage(croppedBitmap)
-                    classifyImage(croppedBitmap)
-                } else {
-                    Toast.makeText(requireContext(), "Failed to crop image", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error cropping image: ${e.message}", Toast.LENGTH_SHORT).show()
+            val croppedBitmap = binding.imageCropper.croppedImage
+            if (croppedBitmap != null) {
+                viewModel.setProcessedImage(croppedBitmap)
+                classifyImage(croppedBitmap)
+            } else {
+                Toast.makeText(requireContext(), "Failed to crop image", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -87,11 +77,7 @@ class ImageEditorFragment : Fragment() {
 
     private fun classifyImage(croppedBitmap: Bitmap) {
         binding.progressBar.visibility = View.VISIBLE
-
-        // Register the observer
         viewModel.classificationState.observe(viewLifecycleOwner, classificationObserver)
-
-        // Start classification
         viewModel.classifyImage(croppedBitmap)
     }
 

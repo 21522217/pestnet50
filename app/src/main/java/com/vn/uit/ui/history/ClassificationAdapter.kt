@@ -7,6 +7,8 @@ import coil.load
 import com.vn.uit.R
 import com.vn.uit.databinding.ItemHistoryBinding
 import com.vn.uit.model.ClassificationResponse
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ClassificationAdapter(
@@ -20,7 +22,9 @@ class ClassificationAdapter(
             binding.pestName.text = item.pestName
             binding.modelName.text = item.modelName
             binding.confidence.text = "${"%.1f".format(item.confidence * 100)}%"
-            val localDate = item.classifiedAt.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+            val localDateTime = LocalDateTime.parse(item.classifiedAt, formatter)
+            val localDate = localDateTime.atZone(ZoneId.systemDefault()).toLocalDate()
             binding.date.text = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
             binding.imageView.load(item.imageUrl) {
                 crossfade(true)

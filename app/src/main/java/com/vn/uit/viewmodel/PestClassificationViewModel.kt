@@ -2,28 +2,27 @@ package com.vn.uit.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.ContentValues
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.ImageDecoder
-import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.cloudinary.Cloudinary
+import com.vn.uit.BuildConfig
+import com.vn.uit.data.remote.ApiClient
 import com.vn.uit.ml.PestClassifier
+import com.vn.uit.model.ClassificationRequest
+import com.vn.uit.model.ClassificationResponse
+import com.vn.uit.repository.PestRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
+import java.io.File
+import java.io.FileOutputStream
 class PestClassificationViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _classificationState = MutableLiveData<ClassificationState>()
@@ -41,12 +40,13 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
     private val _confidenceScore = MutableLiveData<Float?>()
     val confidenceScore: LiveData<Float?> = _confidenceScore
 
+    private val _classificationResult = MutableLiveData<ClassificationResponse?>()
+    val classificationResult: LiveData<ClassificationResponse?> = _classificationResult
+
     @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
 
-    private val pestClassifier: PestClassifier by lazy {
-        PestClassifier(context)
-    }
+    private val pestClassifier: PestClassifier by lazy { PestClassifier(context) }
 
     private val TAG = "PestClassifyImage"
 
@@ -118,10 +118,6 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
         return expScores.map { (it / sumExpScores).toFloat() }.toFloatArray()
     }
 
-    fun setConfidenceScore(confidence: Float) {
-        _confidenceScore.value = confidence
-    }
-
     fun classifyImage(bitmap: Bitmap) {
         _classificationState.value = ClassificationState.Loading
 
@@ -145,35 +141,53 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
                     val confidenceThreshold = 0.8f
                     val maxConfidence = outputProbabilities[maxIndex]
 
-                    // Set confidence score regardless of threshold
                     _confidenceScore.value = maxConfidence
+                    val pestName = pestLabels[maxIndex]
+                    _detectedPestName.value = pestName
 
-                    if (maxConfidence >= confidenceThreshold) {
-                        val pestName = pestLabels[maxIndex]
-                        _detectedPestName.value = pestName
-                        _classificationState.value = ClassificationState.Success(pestName)
-                    } else {
-                        // Still show the best guess even if confidence is low
-                        val pestName = pestLabels[maxIndex]
-                        _detectedPestName.value = pestName
-                        _classificationState.value = ClassificationState.Success(pestName)
+                    Log.d(TAG, "Detected Pest Name: $pestName")
 
-                        // You might want to show a warning in the UI about low confidence
+                    if (maxConfidence < confidenceThreshold) {
                         Log.w(TAG, "Low confidence classification: $maxConfidence for $pestName")
                     }
+
+                    val modelName = "SWIN Transformer"
+                    val confidenceStr = String.format("%.2f", maxConfidence)
+                    val originalName = "${modelName}_${pestName}_${confidenceStr}.jpg".replace(" ", "_")
+
+                    val imageUrl = uploadToCloudinary(bitmap)
+
+                    val result = sendClassificationToBackend(
+                        imageUrl = imageUrl,
+                        originalName = originalName,
+                        pestScientificName = pestName,
+                        modelName = modelName,
+                        confidence = maxConfidence
+                    )
+
+                    viewModelScope.launch {
+                        val pestRepo = PestRepository(ApiClient.pestApi)
+                        when (val result = pestRepo.increasePestOccurrence(pestName)) {
+                            else -> Log.d(
+                                TAG,
+                                "Occurrence updated: ${result.getOrNull()?.occurrenceCount}"
+                            )
+                        }
+                    }
+
+                    _classificationState.value = ClassificationState.Success(result)
+
                 } else {
                     _confidenceScore.value = 0f
                     _classificationState.value = ClassificationState.Error("Unable to classify pest.")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Classification failed", e)
-                Log.v(TAG, "Exception details: ${e.message}", e)
                 _confidenceScore.value = null
                 _classificationState.value = ClassificationState.Error("Classification failed: ${e.message}")
             }
         }
     }
-
 
     fun setImageUri(uri: Uri) {
         try {
@@ -190,7 +204,6 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
             }
 
             setProcessedImage(bitmap)
-
             classifyImage(bitmap)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to decode image", e)
@@ -207,57 +220,67 @@ class PestClassificationViewModel(application: Application) : AndroidViewModel(a
     }
 
     fun setProcessedImage(bitmap: Bitmap) {
-        val softwareBitmap = convertToSoftwareBitmap(bitmap)
-        _processedImage.value = softwareBitmap
+        _processedImage.value = convertToSoftwareBitmap(bitmap)
     }
 
-    fun saveResult(): Uri? {
-        val bitmap = _processedImage.value ?: return null
-        val pestName = _detectedPestName.value ?: "Unknown"
-
-        try {
-            val resultBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
-            val canvas = Canvas(resultBitmap)
-            canvas.drawBitmap(bitmap, 0f, 0f, null)
-
-            val paint = Paint().apply {
-                color = android.graphics.Color.WHITE
-                textSize = 50f
-                style = Paint.Style.FILL
-                isFakeBoldText = true
-                setShadowLayer(10f, 0f, 0f, android.graphics.Color.BLACK)
-            }
-            canvas.drawText(pestName, 20f, bitmap.height - 20f, paint)
-
-            val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-            val filename = "PestDetection_${timestamp}.jpg"
-
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/PestDetector")
-                }
-            }
-
-            val uri = context.contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
-            ) ?: return null
-
-            context.contentResolver.openOutputStream(uri)?.use { outputStream: OutputStream ->
-                resultBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
-            }
-
-            return uri
-        } catch (e: Exception) {
-            return null
-        }
-    }
 
     sealed class ClassificationState {
         object Idle : ClassificationState()
         object Loading : ClassificationState()
-        data class Success(val pestName: String) : ClassificationState()
+        data class Success(val result: ClassificationResponse) : ClassificationState()
         data class Error(val message: String) : ClassificationState()
+    }
+
+    private suspend fun sendClassificationToBackend(
+        imageUrl: String,
+        originalName: String,
+        pestScientificName: String,
+        modelName: String,
+        confidence: Float
+    ): ClassificationResponse {
+        val request = ClassificationRequest(
+            imageUrl = imageUrl,
+            originalName = originalName,
+            scientificName = pestScientificName,
+            modelName = modelName,
+            confidence = confidence
+        )
+
+        val response = ApiClient.classificationApi.createClassification(request)
+
+        if (response.status == 201 && response.data != null) {
+            Log.d(TAG, "Classification sent successfully: ${response.data}")
+            return response.data
+        } else {
+            val message = response.message ?: "Unknown backend error"
+            Log.w(TAG, "Classification failed: $message")
+            throw Exception(message)
+        }
+    }
+
+    private suspend fun uploadToCloudinary(bitmap: Bitmap): String {
+        return withContext(Dispatchers.IO) {
+            val file = File.createTempFile("upload", ".jpg", context.cacheDir)
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+            out.flush()
+            out.close()
+
+            val cloudinary = Cloudinary(
+                mapOf(
+                    "cloud_name" to BuildConfig.CLOUDINARY_CLOUD_NAME,
+                    "api_key" to BuildConfig.CLOUDINARY_API_KEY,
+                    "api_secret" to BuildConfig.CLOUDINARY_API_SECRET
+                )
+            )
+
+            val uploadResult = cloudinary.uploader().upload(file, mapOf(
+                "upload_preset" to BuildConfig.CLOUDINARY_UPLOAD_PRESET
+            ))
+
+            file.delete()
+
+            return@withContext uploadResult["secure_url"] as String
+        }
     }
 }

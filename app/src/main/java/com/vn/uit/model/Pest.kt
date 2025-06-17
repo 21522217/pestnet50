@@ -16,7 +16,7 @@ data class Pest(
     val controlMethods: String?,
     @SerializedName("harmLevel")
     private val _harmLevel: String?,
-    val pestUrl: String = "https://www.inaturalist.org/taxa/52045-Cnaphalocrocis-medinalis",
+    val pestUrl: String = "",
     val relatedImages: List<String> = emptyList(),
     val pestInsecticide: List<String> = emptyList(),
     val occurrenceCount: Int = 0,
@@ -49,11 +49,12 @@ enum class HarmLevel(val displayName: String, val stars: Int) : Parcelable {
 data class PestScreenState(
     val pests: List<Pest> = emptyList(),
     val filteredPests: List<Pest> = emptyList(),
-    val searchQuery: String = "",
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
+    val searchQuery: String = "",
     val selectedPest: Pest? = null,
     val showDialog: Boolean = false,
     val currentPage: Int = 0,
-    val totalPages: Int = 1,
-    val isLastPage: Boolean = false,
+    val totalPages: Int = 0,
+    val isLastPage: Boolean = false
 )

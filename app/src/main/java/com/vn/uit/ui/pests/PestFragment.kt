@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vn.uit.data.remote.ApiClient
 import com.vn.uit.databinding.FragmentPestsViewBinding
 import com.vn.uit.repository.PestRepository
@@ -44,13 +45,38 @@ class PestsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSearch()
+        setupSwipeRefresh()
         observeViewModel()
     }
 
     private fun setupRecyclerView() {
         adapter = PestAdapter { pest -> viewModel.showPestDetails(pest) }
-        binding.pestRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.pestRecyclerView.layoutManager = layoutManager
         binding.pestRecyclerView.adapter = adapter
+
+        // Setup pagination for RecyclerView
+        setupPagination(layoutManager)
+    }
+
+    private fun setupPagination(layoutManager: GridLayoutManager) {
+        binding.pestRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                // Load more when reaching the end of the list
+                if (!viewModel.uiState.value.isLoading &&
+                    !viewModel.uiState.value.isLastPage &&
+                    (visibleItemCount + firstVisibleItemPosition) >= totalItemCount &&
+                    firstVisibleItemPosition >= 0) {
+                    viewModel.loadMorePests()
+                }
+            }
+        })
     }
 
     private fun setupSearch() {
@@ -59,12 +85,34 @@ class PestsFragment : Fragment() {
         }
     }
 
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refreshPests()
+        }
+
+        // Customize SwipeRefreshLayout colors
+        binding.swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+    }
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 adapter.submitList(state.filteredPests)
 
-                binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                // Update loading indicators
+                binding.progressBar.visibility = if (state.isLoading && state.pests.isEmpty()) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+
+                // Stop swipe refresh animation
+                binding.swipeRefreshLayout.isRefreshing = state.isRefreshing
 
                 if (state.showDialog && state.selectedPest != null) {
                     val dialog = PestDetailDialog.newInstance(state.selectedPest)

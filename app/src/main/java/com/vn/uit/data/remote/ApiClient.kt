@@ -18,7 +18,6 @@ object ApiClient {
 
     private const val BASE_URL = "http://192.168.1.103:8081/pestnet/api/"
 
-
     @Volatile
     private var token: String? = null
 
@@ -54,6 +53,8 @@ object ApiClient {
         private set
     lateinit var pestApi: PestApi
         private set
+    lateinit var classificationApi: ClassificationApi
+        private set
 
 
     private val scope = CoroutineScope(Dispatchers.IO + Job())
@@ -78,5 +79,6 @@ object ApiClient {
         authApi = retrofit.create(AuthApi::class.java)
         historyApi = retrofit.create(HistoryApi::class.java)
         pestApi = retrofit.create(PestApi::class.java)
+        classificationApi = retrofit.create(ClassificationApi::class.java)
     }
 }

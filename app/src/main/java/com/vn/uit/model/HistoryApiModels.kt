@@ -30,12 +30,3 @@ data class HistoryStats(
     val topPestName: String?,
     val lastScanDate: Instant?
 )
-
-data class HistoryUiState(
-    val isLoading: Boolean = false,
-    val recentScans: List<Classification> = emptyList(),
-    val bestAccuracyResults: List<Classification> = emptyList(),
-    val stats: HistoryStats? = null,
-    val error: String? = null,
-    val isRefreshing: Boolean = false
-)

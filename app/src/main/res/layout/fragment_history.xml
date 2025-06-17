@@ -152,23 +152,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="8dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/most_detected_pests"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/viewAllPests"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_all"
-                    android:textColor="@color/accent_green"
-                    android:textSize="14sp"
-                    android:padding="4dp" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

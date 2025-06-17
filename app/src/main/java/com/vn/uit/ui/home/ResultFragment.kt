@@ -1,36 +1,46 @@
-package com.vn.uit.ui.home
+package com.vn.uit.ui.home // Changed package name to match your project
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.navArgs // Add this import
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import com.vn.uit.R
-import com.vn.uit.data.remote.ApiClient
 import com.vn.uit.databinding.FragmentResultBinding
-import com.vn.uit.model.InsecticideInfo
-import com.vn.uit.viewmodel.PestClassificationViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URLEncoder
-import kotlin.math.roundToInt
+import com.vn.uit.model.ClassificationResponse
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ResultFragment : Fragment() {
 
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PestClassificationViewModel by activityViewModels()
-    private lateinit var insecticidesAdapter: InsecticidesAdapter
+
+    // Use Safe Args instead of manual Bundle handling
+    private val args: ResultFragmentArgs by navArgs()
+    private lateinit var classificationResult: ClassificationResponse
+
+    // Remove the companion object - not needed with Safe Args
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Get the result from Safe Args
+        classificationResult = args.result
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentResultBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,108 +48,161 @@ class ResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        observeViewModel()
+
+        populateViews()
         setupClickListeners()
     }
 
-    private fun setupRecyclerView() {
-        insecticidesAdapter = InsecticidesAdapter()
-        binding.insecticidesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.insecticidesRecyclerView.adapter = insecticidesAdapter
+    private fun populateViews() {
+        populateImageAndConfidence()
+        populateIdentificationInfo()
+        populateTreatmentInfo()
+        binding.insecticidesCard.visibility = View.GONE // Remove card since no adapter is used
     }
 
-    private fun observeViewModel() {
-        viewModel.detectedPestName.observe(viewLifecycleOwner) { pestName ->
-            if (pestName != null) {
-                displayPestInfo(pestName)
-            } else {
-                displayEmptyState()
-            }
-        }
+    private fun populateImageAndConfidence() {
+        Glide.with(this)
+            .load(classificationResult.imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.drawable.placeholder_image)
+            .error(R.drawable.image_broken)
+            .into(binding.resultImageView)
 
-        viewModel.processedImage.observe(viewLifecycleOwner) { bitmap ->
-            binding.resultImageView.setImageBitmap(bitmap ?: return@observe)
-        }
-
-        viewModel.confidenceScore.observe(viewLifecycleOwner) { confidence ->
-            val percentage = (confidence?.times(100))?.roundToInt() ?: 0
-            binding.confidenceTextView.text = "$percentage% Confidence"
-        }
+        val confidencePercentage = (classificationResult.confidence * 100).toInt()
+        binding.confidenceTextView.text = getString(R.string.confidence_percentage, confidencePercentage)
     }
 
-    private fun setupClickListeners() {
-        binding.newScanButton.setOnClickListener {
-            viewModel.resetClassification()
-            findNavController().popBackStack()
-            findNavController().popBackStack()
-        }
-
-        binding.learnMoreButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Learn more feature coming soon!", Toast.LENGTH_SHORT)
-                .show()
-        }
+    private fun populateIdentificationInfo() {
+        binding.pestNameTextView.text = classificationResult.pestName ?: getString(R.string.unknown_pest)
+        binding.scientificNameTextView.text = classificationResult.pestScientificName
+        setupRegionChips()
     }
 
-    private fun displayPestInfo(pestName: String) {
-        lifecycleScope.launch {
-            val encodedName = URLEncoder.encode(pestName, "UTF-8")
-            val pest = withContext(Dispatchers.IO) {
-                try {
-                    ApiClient.pestApi.getPestByScientificName(encodedName).data
-                } catch (e: Exception) {
-                    null
-                }
-            }
-
-            if (pest != null) {
-                binding.pestNameTextView.text = pest.name
-                binding.scientificNameTextView.text = pest.scientificName
-                binding.treatmentTextView.text = pest.controlMethods
-                pest.regions?.let { setupRegionChips(it) }
-
-                val mappedInsecticides = pest.pestInsecticide?.mapNotNull {
-                    val parts = it.split(" - ")
-                    if (parts.size == 3) {
-                        InsecticideInfo(parts[0].trim(), parts[1].trim(), parts[2].trim())
-                    } else null
-                }
-
-                insecticidesAdapter.submitList(mappedInsecticides)
-            } else {
-                displayEmptyState()
-            }
-        }
-    }
-
-
-    private fun displayEmptyState() {
-        binding.pestNameTextView.text = "Unknown Pest"
-        binding.scientificNameTextView.text = "Classification unavailable"
-        binding.treatmentTextView.text =
-            "For accurate pest identification and treatment recommendations, please:\n• Take a clearer photo\n• Ensure good lighting\n• Focus on the pest details\n• Try from different angles"
+    private fun setupRegionChips() {
         binding.regionsChipGroup.removeAllViews()
-        insecticidesAdapter.submitList(emptyList())
-        setupRegionChips(listOf("Various regions"))
-    }
 
-    private fun setupRegionChips(regions: List<String>) {
-        binding.regionsChipGroup.removeAllViews()
-        regions.forEach { region ->
+        classificationResult.pestRegions?.forEach { region ->
             val chip = Chip(requireContext()).apply {
                 text = region
                 isClickable = false
                 isCheckable = false
-                setChipBackgroundColorResource(com.google.android.material.R.color.m3_chip_background_color)
-                setTextColor(
-                    resources.getColor(
-                        com.google.android.material.R.color.m3_chip_text_color,
-                        null
-                    )
-                )
+                setChipBackgroundColorResource(R.color.chip_background)
+                setTextColor(resources.getColor(R.color.chip_text, null))
             }
             binding.regionsChipGroup.addView(chip)
         }
+
+        binding.regionsChipGroup.visibility = if (classificationResult.pestRegions.isNullOrEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+    private fun populateTreatmentInfo() {
+        val treatmentText = classificationResult.pestDescription ?: getString(R.string.no_treatment_info)
+        binding.treatmentTextView.text = treatmentText
+    }
+
+    private fun setupClickListeners() {
+        binding.learnMoreButton.setOnClickListener {
+            openExternalUrl(classificationResult.pestUrl)
+        }
+
+        binding.shareResultButton.setOnClickListener {
+            shareResult()
+        }
+
+        binding.newScanButton.setOnClickListener {
+            navigateToNewScan()
+        }
+    }
+
+    private fun openExternalUrl(url: String?) {
+        if (url.isNullOrBlank()) {
+            showSnackbar(getString(R.string.no_url_available))
+            return
+        }
+
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(intent)
+            } else {
+                showSnackbar(getString(R.string.no_browser_available))
+            }
+        } catch (e: Exception) {
+            showSnackbar(getString(R.string.error_opening_url))
+        }
+    }
+
+    private fun shareResult(): Unit = try {
+        val shareText = buildShareText()
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.pest_identification_result))
+        }
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_results)))
+    } catch (e: Exception) {
+        showSnackbar(getString(R.string.error_sharing))
+    }
+
+    private fun buildShareText(): String {
+        val pestName = classificationResult.pestName ?: getString(R.string.unknown_pest)
+        val scientificName = classificationResult.pestScientificName
+        val confidence = (classificationResult.confidence * 100).toInt()
+        val timestamp = formatTimestamp(classificationResult.classifiedAt)
+
+        return buildString {
+            appendLine(getString(R.string.share_header))
+            appendLine()
+            appendLine("🐛 ${getString(R.string.pest_name)}: $pestName")
+            appendLine("🔬 ${getString(R.string.scientific_name)}: $scientificName")
+            appendLine("📊 ${getString(R.string.confidence)}: $confidence%")
+            appendLine("📅 ${getString(R.string.detected_on)}: $timestamp")
+
+            classificationResult.pestRegions?.let { regions ->
+                if (regions.isNotEmpty()) {
+                    appendLine("🌍 ${getString(R.string.regions)}: ${regions.joinToString(", ")}")
+                }
+            }
+
+            classificationResult.pestUrl?.let { url ->
+                appendLine()
+                appendLine("🔗 ${getString(R.string.learn_more)}: $url")
+            }
+
+            appendLine()
+            appendLine(getString(R.string.app_signature))
+        }
+    }
+
+    private fun formatTimestamp(timestamp: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd, yyyy 'at' HH:mm", Locale.getDefault())
+            val date = inputFormat.parse(timestamp)
+            date?.let { outputFormat.format(it) } ?: timestamp
+        } catch (e: Exception) {
+            timestamp
+        }
+    }
+
+    private fun navigateToNewScan() {
+        try {
+            findNavController().navigate(
+                ResultFragmentDirections.actionResultFragmentToNavHome()
+            )
+        } catch (e: Exception) {
+            // Fallback to popBackStack if the action doesn't work
+            findNavController().popBackStack(R.id.nav_home, false)
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
