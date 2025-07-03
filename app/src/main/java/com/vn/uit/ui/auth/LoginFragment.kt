@@ -57,7 +57,9 @@ class LoginFragment : Fragment() {
         binding.googleButton.setOnClickListener { safeShowToast("Google login not implemented yet") }
         binding.facebookButton.setOnClickListener { safeShowToast("Facebook login not implemented yet") }
         binding.othersButton.setOnClickListener { safeShowToast("Other login options not implemented yet") }
-        binding.forgotPasswordTextView.setOnClickListener { safeShowToast("Forgot password not implemented yet") }
+        binding.forgotPasswordTextView.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
         binding.termsTextView.setOnClickListener { safeShowToast("Terms and Privacy not implemented yet") }
         binding.dontHaveAnAccount.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)

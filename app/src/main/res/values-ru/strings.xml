@@ -5,25 +5,25 @@
     <string name="navigation_drawer_close">Закрыть навигационное меню</string>
     <string name="nav_header_title">PestNet 50 - Классификация вредителей</string>
     <string name="nav_header_subtitle">uit.pestnet@android.com</string>
-    <string name="nav_header_desc">Навигационный заголовок</string>
+    <string name="nav_header_desc">Заголовок навигации</string>
     <string name="action_settings">Настройки</string>
 
-    <string name="login_title">ВОЙТИ</string>
+    <string name="login_title">ВХОД</string>
     <string name="username_hint">Пожалуйста, введите имя пользователя…</string>
     <string name="password_hint">Пожалуйста, введите пароль…</string>
     <string name="remember_me">Запомнить меня</string>
     <string name="forgot_password">Забыли пароль?</string>
-    <string name="continue_with_google">Продолжить через Google</string>
-    <string name="continue_with_facebook">Продолжить через Facebook</string>
-    <string name="continue_with_others">Продолжить через другие</string>
+    <string name="continue_with_google">Продолжить с Google</string>
+    <string name="continue_with_facebook">Продолжить с Facebook</string>
+    <string name="continue_with_others">Продолжить с другими</string>
     <string name="terms_and_privacy">Условия и конфиденциальность</string>
     <string name="copyright">2025©Авторские права</string>
     <string name="or">или</string>
-    <string name="dontHaveAnAccountPleaseSignup">Нет аккаунта? Зарегистрируйтесь</string>
+    <string name="dontHaveAnAccountPleaseSignup">Нет аккаунта? Пожалуйста, зарегистрируйтесь</string>
 
     <string name="signup_title">РЕГИСТРАЦИЯ</string>
-    <string name="email">Эл. почта</string>
-    <string name="email_hint">Пожалуйста, введите вашу эл. почту</string>
+    <string name="email">Электронная почта</string>
+    <string name="email_hint">Пожалуйста, введите вашу электронную почту</string>
     <string name="confirm_password_hint">Подтвердите ваш пароль</string>
     <string name="already_have_account">Уже есть аккаунт? Войти</string>
 
@@ -34,20 +34,20 @@
     <string name="password">Пароль</string>
     <string name="login">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>
-    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="confirm_password">Подтвердить пароль</string>
     <string name="already_have_an_account_log_in">Уже есть аккаунт? Войти</string>
     <string name="open_camera">Открыть камеру</string>
     <string name="toggle_flash">Переключить вспышку</string>
     <string name="take_picture">Сделать снимок</string>
-    <string name="apply_edit">Применить изменения</string>
+    <string name="apply_edit">Применить редактирование</string>
     <string name="save_image">Сохранить изображение</string>
-    <string name="image_preview">Предпросмотр изображения</string>
-    <string name="dynamic_duo">Динамический дуэт</string>
+    <string name="image_preview">Предварительный просмотр</string>
+    <string name="dynamic_duo">Динамичный дуэт</string>
     <string name="result_will_appear_here">Результат появится здесь</string>
     <string name="no_images_found">Изображения не найдены</string>
     <string name="take_photo">Сделать фото</string>
     <string name="open_gallery">Открыть галерею</string>
-    <string name="pest_occurrences">Появления вредителя: %d</string>
+    <string name="pest_occurrences">Случаи вредителей: %d</string>
 
     <!-- Settings -->
     <string name="general_settings">Общие настройки</string>
@@ -61,7 +61,7 @@
         <item>English</item>
         <item>Tiếng Việt</item>
         <item>中文</item>
-        <item>Россия</item>
+        <item>Русский</item>
     </string-array>
     <string-array name="language_values">
         <item>en</item>
@@ -69,22 +69,23 @@
         <item>zh</item>
         <item>ru</item>
     </string-array>
+
     <!-- About Us -->
     <string name="about_us">О нас</string>
-    <string name="about_app_title">О приложении для классификации вредителей</string>
+    <string name="about_app_title">О приложении классификации вредителей</string>
     <string name="about_app_summary">Версия: 1.0\nКомпания: XYZ Corp\nРазработано: Ваше имя</string>
     <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">О нас\n\nВерсия приложения: 1.0\nКомпания: XYZ Corp\nРазработано: Ваше имя</string>
 
     <string name="app_theme">Тема</string>
-    <string name="set_theme">Выберите тему приложения</string>
+    <string name="set_theme">Выбрать тему приложения</string>
 
-    <string name="appearance_settings">Оформление</string>
+    <string name="appearance_settings">Внешний вид</string>
     <string name="theme_title">Тема</string>
-    <string name="theme_summary">Установите тему приложения</string>
-    <string name="most_detected_pests">Чаще всего обнаруженные вредители</string>
+    <string name="theme_summary">Установить тему приложения</string>
+    <string name="most_detected_pests">Наиболее обнаруженные вредители</string>
     <string name="view_all">Показать все</string>
     <string name="scan">Сканировать</string>
-    <string name="recent_scans">Последние сканирования</string>
+    <string name="recent_scans">Недавние сканирования</string>
     <string name="search_for_pests">Поиск вредителей...</string>
     <string name="best_accuracy_results">Результаты с лучшей точностью</string>
     <string name="share">Поделиться</string>
@@ -94,13 +95,13 @@
     <string name="may_11_2024">11 мая 2024</string>
     <string name="image_information">Информация об изображении</string>
     <string name="also_detected">Также обнаружено</string>
-    <string name="treatment_options">Варианты обработки</string>
-    <string name="_5_occurrences">5 появлений</string>
+    <string name="treatment_options">Варианты лечения</string>
+    <string name="_5_occurrences">5 случаев</string>
     <string name="spodoptera_frugiperda">Spodoptera frugiperda</string>
-    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Этот вредитель питается различными культурами, включая кукурузу, хлопок и овощи. Он может нанести серьёзный ущерб, объедая листья и проникая в плоды.</string>
-    <string name="armyworm">Армейский червь</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Этот вредитель питается различными культурами, включая кукурузу, хлопок и овощи. Он может нанести серьезный ущерб, обезлиствляя растения и проникая в плоды.</string>
+    <string name="armyworm">Совка</string>
     <string name="_98_confidence">98% уверенность</string>
-    <string name="pest_detection_details">Детали обнаружения вредителя</string>
+    <string name="pest_detection_details">Детали обнаружения вредителей</string>
     <string name="close">Закрыть</string>
     <string name="close_camera">Закрыть камеру</string>
     <string name="camera_settings">Настройки камеры</string>
@@ -119,33 +120,113 @@
     <string name="history">История</string>
     <string name="settings">Настройки</string>
     <string name="account">Аккаунт</string>
-    <string name="logout">Выход</string>
+    <string name="logout">Выйти</string>
     <string name="search">Поиск</string>
     <string name="choose_from_device_gallery">Выбрать из галереи устройства</string>
     <string name="take_a_photo">Сделать фото</string>
     <string name="choose_from_gallery">Выбрать из галереи</string>
-    <string name="unknown_pest">Неизвестный вредитель</string>
     <string name="scientific_name_unavailable">Научное название недоступно</string>
     <string name="description_unavailable">Описание недоступно</string>
-    <string name="confidence_percentage">%d%% уверенность</string>
     <string name="date_unavailable">Дата недоступна</string>
     <string name="filename_unavailable">Неизвестный файл</string>
     <string name="pest_image">Изображение вредителя</string>
-    <string name="occurrences_count">Количество появлений: %d%%</string>
+    <string name="occurrences_count">Случаи: %d%%</string>
     <string name="actions">Действия</string>
     <string name="remove_result">Удалить результат</string>
     <string name="confidence_90">Уверенность: 90%</string>
     <string name="image_description">Описание изображения</string>
-    <string name="pest_name">Название вредителя</string>
     <string name="classified_image">Классифицированное изображение</string>
     <string name="pests">Вредители</string>
-    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">Основной вредитель риса, который наносит значительный ущерб, сворачивая и поедая листья риса, что приводит к снижению фотосинтеза и урожайности.</string>
+    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">Основной вредитель риса, который наносит значительный ущерб, складывая и питаясь листьями риса, что приводит к снижению фотосинтеза и потере урожая.</string>
     <string name="biological_characteristics">🔬 Биологические характеристики</string>
-    <string name="regions_affected">📍 Пострадавшие регионы</string>
+    <string name="regions_affected">📍 Пораженные регионы</string>
     <string name="view_on_inaturalist">Посмотреть на iNaturalist</string>
 
-    <string name="login_successful">Вход выполнен успешно!</string>
-    <string name="share_results">Поделиться результатом</string>
+    <string name="login_successful">Вход успешен!</string>
+    <string name="signup_successful">Регистрация успешна!</string>
+    <string name="related_pest_image">Изображение связанного вредителя</string>
+    <string name="cnaphalocrocis_medinalis">Cnaphalocrocis medinalis</string>
+    <string name="rice_leaf_roller">Рисовый листовертка</string>
+    <string name="inaturalist">iNaturalist</string>
+    <string name="uit_pest_classification">UIT Классификация вредителей</string>
+    <string name="version_1_0">Версия 1.0</string>
+    <string name="app_logo">Логотип приложения</string>
+    <string name="confidence_percentage">%d%% уверенность</string>
+    <string name="unknown_pest">Неизвестный вредитель</string>
+    <string name="no_treatment_info">Информация о лечении недоступна</string>
+    <string name="no_url_available">URL дополнительной информации недоступен</string>
+    <string name="no_browser_available">Браузер недоступен</string>
+    <string name="error_opening_url">Ошибка при открытии URL</string>
+    <string name="pest_identification_result">Результат идентификации вредителя</string>
+    <string name="error_sharing">Ошибка при совместном использовании результата</string>
+    <string name="insecticide_icon">Иконка инсектицида</string>
+
+    <!-- Share Text Strings -->
+    <string name="share_header">🔍 Результат идентификации вредителя</string>
+    <string name="pest_name">Вредитель</string>
+    <string name="scientific_name">Научное название</string>
+    <string name="confidence">Уверенность</string>
+    <string name="detected_on">Обнаружено</string>
+    <string name="regions">Регионы</string>
+    <string name="app_signature">Поделился через приложение обнаружения вредителей</string>
+    <string name="share_results">Поделиться результатами</string>
+
+    <string name="forgot_password_title">Сброс пароля</string>
+    <string name="forgot_password_subtitle">Введите ваш адрес электронной почты, и мы отправим вам ссылку для сброса пароля</string>
+    <string name="send_reset_email">Отправить письмо для сброса</string>
+    <string name="contact_support">Связаться с поддержкой</string>
+    <string name="remember_password">Помните пароль?</string>
+    <string name="back_to_login">Войти</string>
+    <string name="back">Назад</string>
+    <string name="reset_email_sent">Письмо для сброса отправлено успешно! Пожалуйста, проверьте вашу почту.</string>
+    <string name="reset_email_error">Не удалось отправить письмо для сброса. Пожалуйста, попробуйте еще раз.</string>
+    <string name="report">Отчет</string>
+    <string name="reset_email_sent_success">Письмо отправлено успешно!</string>
+    <string name="report_issue">Сообщить о проблеме</string>
+    <string name="no_scientific_name_available">Научное название недоступно</string>
+
+    <string name="chip_background">Фон чипа</string>
+    <string name="chip_text">Текст чипа</string>
+
+    <string name="scientific_name_not_available">Научное название недоступно</string>
+    <string name="no_description_available">Описание недоступно</string>
+    <string name="unknown_risk">НЕИЗВЕСТНЫЙ РИСК</string>
+    <string name="no_regions_specified">Регионы не указаны</string>
+    <string name="no_biological_characteristics_available">Биологические характеристики недоступны</string>
+    <string name="no_control_methods_available">Методы контроля недоступны</string>
+    <string name="no_insecticides_specified">Инсектициды не указаны</string>
+    <string name="unknown">Неизвестно</string>
+
+    <string name="risk_high">Высокий риск</string>
+    <string name="risk_medium">Средний риск</string>
+    <string name="risk_low">Низкий риск</string>
+    <string name="primary_dark">Основной темный</string>
+    <string name="insecticide_background">Фон инсектицида</string>
+
+    <string name="regionsText">Регионы</string>
+    <string name="btnClose">Закрыть</string>
+    <string name="btnViewOnINaturalist">Посмотреть на iNaturalist</string>
+    <string name="btnShare">Поделиться</string>
+    <string name="btnReportSighting">Сообщить о наблюдении</string>
+    <string name="btnGetHelp">Получить помощь</string>
+
+    <!-- Error messages -->
+    <string name="cannot_open_image">Невозможно открыть изображение</string>
+    <string name="no_browser_available_inaturalist">Браузер недоступен для открытия iNaturalist</string>
+    <string name="failed_to_open_inaturalist">Не удалось открыть поиск iNaturalist</string>
+    <string name="no_apps_available_to_share">Нет приложений для совместного использования</string>
+    <string name="failed_to_share_pest_info">Не удалось поделиться информацией о вредителе</string>
+    <string name="reporting_feature_coming_soon">Функция отчетности скоро появится!</string>
+    <string name="help_feature_coming_soon">Функция помощи скоро появится!</string>
+
+    <string name="no_internet_connection">Нет подключения к интернету</string>
+    <string name="request_timed_out">Время запроса истекло. Пожалуйста, попробуйте еще раз</string>
+    <string name="pest_info_not_found">Информация о вредителе не найдена</string>
+    <string name="server_error">Ошибка сервера. Пожалуйста, попробуйте позже</string>
+    <string name="network_error">Ошибка сети: %s</string>
+    <string name="error_loading_pest_info">Ошибка загрузки информации о вредителе: %s</string>
+    <string name="loading_pest_information">Загрузка информации о вредителе...</string>
+    <string name="pest_info_not_found_for">Информация о вредителе не найдена для: %s</string>
 
     <string-array name="theme_entries">
         <item>Системная по умолчанию</item>

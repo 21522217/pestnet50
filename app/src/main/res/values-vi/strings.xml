@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PestNet</string>
-    <string name="navigation_drawer_open">Mở thanh điều hướng</string>
-    <string name="navigation_drawer_close">Đóng thanh điều hướng</string>
-    <string name="nav_header_title">PestNet 50 - Phân loại sâu bệnh</string>
+    <string name="navigation_drawer_open">Mở ngăn kéo điều hướng</string>
+    <string name="navigation_drawer_close">Đóng ngăn kéo điều hướng</string>
+    <string name="nav_header_title">PestNet 50 - Phân loại sâu hại</string>
     <string name="nav_header_subtitle">uit.pestnet@android.com</string>
     <string name="nav_header_desc">Tiêu đề điều hướng</string>
     <string name="action_settings">Cài đặt</string>
@@ -11,11 +11,11 @@
     <string name="login_title">ĐĂNG NHẬP</string>
     <string name="username_hint">Vui lòng nhập tên người dùng…</string>
     <string name="password_hint">Vui lòng nhập mật khẩu…</string>
-    <string name="remember_me">Ghi nhớ đăng nhập</string>
+    <string name="remember_me">Ghi nhớ tôi</string>
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="continue_with_google">Tiếp tục với Google</string>
     <string name="continue_with_facebook">Tiếp tục với Facebook</string>
-    <string name="continue_with_others">Tiếp tục với tùy chọn khác</string>
+    <string name="continue_with_others">Tiếp tục với khác</string>
     <string name="terms_and_privacy">Điều khoản và Quyền riêng tư</string>
     <string name="copyright">2025©Bản quyền</string>
     <string name="or">hoặc</string>
@@ -24,7 +24,7 @@
     <string name="signup_title">ĐĂNG KÝ</string>
     <string name="email">Email</string>
     <string name="email_hint">Vui lòng nhập email của bạn</string>
-    <string name="confirm_password_hint">Xác nhận mật khẩu</string>
+    <string name="confirm_password_hint">Xác nhận mật khẩu của bạn</string>
     <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
 
     <string name="menu_home">Trang chủ</string>
@@ -36,41 +36,43 @@
     <string name="sign_up">Đăng ký</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="already_have_an_account_log_in">Đã có tài khoản? Đăng nhập</string>
-    <string name="open_camera">Mở camera</string>
+    <string name="open_camera">Mở máy ảnh</string>
     <string name="toggle_flash">Bật/tắt đèn flash</string>
     <string name="take_picture">Chụp ảnh</string>
     <string name="apply_edit">Áp dụng chỉnh sửa</string>
-    <string name="save_image">Lưu ảnh</string>
-    <string name="image_preview">Xem trước ảnh</string>
-    <string name="dynamic_duo">Bộ đôi hoàn hảo</string>
-    <string name="result_will_appear_here">Kết quả sẽ hiển thị tại đây</string>
-    <string name="no_images_found">Không tìm thấy ảnh</string>
+    <string name="save_image">Lưu hình ảnh</string>
+    <string name="image_preview">Xem trước hình ảnh</string>
+    <string name="dynamic_duo">Bộ đôi năng động</string>
+    <string name="result_will_appear_here">Kết quả sẽ xuất hiện ở đây</string>
+    <string name="no_images_found">Không tìm thấy hình ảnh</string>
     <string name="take_photo">Chụp ảnh</string>
     <string name="open_gallery">Mở thư viện</string>
-    <string name="pest_occurrences">Số lần phát hiện sâu bệnh: %d</string>
+    <string name="pest_occurrences">Số lần xuất hiện sâu hại: %d</string>
 
     <!-- Settings -->
     <string name="general_settings">Cài đặt chung</string>
     <string name="enable_notifications">Bật thông báo</string>
     <string name="receive_notifications">Nhận thông báo từ ứng dụng</string>
     <string name="app_language">Ngôn ngữ ứng dụng</string>
-    <string name="set_language">Chọn ngôn ngữ ứng dụng</string>
+    <string name="set_language">Đặt ngôn ngữ của ứng dụng</string>
 
     <!-- Language options -->
     <string-array name="language_entries">
         <item>English</item>
         <item>Tiếng Việt</item>
         <item>中文</item>
+        <item>Русский</item>
     </string-array>
     <string-array name="language_values">
         <item>en</item>
         <item>vi</item>
         <item>zh</item>
+        <item>ru</item>
     </string-array>
 
     <!-- About Us -->
     <string name="about_us">Về chúng tôi</string>
-    <string name="about_app_title">Giới thiệu ứng dụng phân loại sâu bệnh</string>
+    <string name="about_app_title">Về ứng dụng phân loại sâu hại</string>
     <string name="about_app_summary">Phiên bản: 1.0\nCông ty: XYZ Corp\nPhát triển bởi: Tên của bạn</string>
     <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">Về chúng tôi\n\nPhiên bản ứng dụng: 1.0\nCông ty: XYZ Corp\nPhát triển bởi: Tên của bạn</string>
 
@@ -79,40 +81,40 @@
 
     <string name="appearance_settings">Giao diện</string>
     <string name="theme_title">Giao diện</string>
-    <string name="theme_summary">Thiết lập giao diện ứng dụng</string>
-    <string name="most_detected_pests">Sâu bệnh được phát hiện nhiều nhất</string>
+    <string name="theme_summary">Đặt giao diện ứng dụng</string>
+    <string name="most_detected_pests">Sâu hại được phát hiện nhiều nhất</string>
     <string name="view_all">Xem tất cả</string>
     <string name="scan">Quét</string>
-    <string name="recent_scans">Các lần quét gần đây</string>
-    <string name="search_for_pests">Tìm kiếm sâu bệnh…</string>
-    <string name="best_accuracy_results">Kết quả chính xác nhất</string>
+    <string name="recent_scans">Quét gần đây</string>
+    <string name="search_for_pests">Tìm kiếm sâu hại...</string>
+    <string name="best_accuracy_results">Kết quả độ chính xác tốt nhất</string>
     <string name="share">Chia sẻ</string>
     <string name="save_report">Lưu báo cáo</string>
-    <string name="failed_to_load_pest_data">Không tải được dữ liệu sâu bệnh</string>
-    <string name="loading_details">Đang tải chi tiết…</string>
+    <string name="failed_to_load_pest_data">Không thể tải dữ liệu sâu hại</string>
+    <string name="loading_details">Đang tải chi tiết...</string>
     <string name="may_11_2024">11 tháng 5, 2024</string>
-    <string name="image_information">Thông tin ảnh</string>
+    <string name="image_information">Thông tin hình ảnh</string>
     <string name="also_detected">Cũng được phát hiện</string>
-    <string name="treatment_options">Phương pháp xử lý</string>
-    <string name="_5_occurrences">5 lần phát hiện</string>
-    <string name="spodoptera_frugiperda">Sâu keo mùa thu</string>
-    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Sâu này ăn nhiều loại cây trồng như ngô, bông và rau quả. Chúng có thể gây thiệt hại nghiêm trọng bằng cách ăn lá và đục vào quả.</string>
-    <string name="armyworm">Sâu khoang</string>
-    <string name="_98_confidence">Độ tin cậy 98%</string>
-    <string name="pest_detection_details">Chi tiết nhận diện sâu bệnh</string>
+    <string name="treatment_options">Các tùy chọn điều trị</string>
+    <string name="_5_occurrences">5 lần xuất hiện</string>
+    <string name="spodoptera_frugiperda">Spodoptera frugiperda</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">Sâu hại này ăn nhiều loại cây trồng bao gồm ngô, bông và rau. Nó có thể gây tổn hại nghiêm trọng bằng cách làm rụng lá cây và khoan vào quả.</string>
+    <string name="armyworm">Sâu keo</string>
+    <string name="_98_confidence">98% tin cậy</string>
+    <string name="pest_detection_details">Chi tiết phát hiện sâu hại</string>
     <string name="close">Đóng</string>
-    <string name="close_camera">Đóng camera</string>
-    <string name="camera_settings">Cài đặt camera</string>
-    <string name="flip_camera">Đảo camera</string>
-    <string name="detected_pest">Sâu bệnh phát hiện:</string>
+    <string name="close_camera">Đóng máy ảnh</string>
+    <string name="camera_settings">Cài đặt máy ảnh</string>
+    <string name="flip_camera">Lật máy ảnh</string>
+    <string name="detected_pest">Sâu hại được phát hiện:</string>
     <string name="description">Mô tả:</string>
     <string name="new_scan">Quét mới</string>
     <string name="save_result">Lưu kết quả</string>
-    <string name="search_pests">Tìm sâu bệnh…</string>
-    <string name="similar_pests">Sâu bệnh tương tự</string>
-    <string name="recommended_insecticides">Thuốc trừ sâu khuyến nghị</string>
+    <string name="search_pests">Tìm kiếm sâu hại...</string>
+    <string name="similar_pests">Sâu hại tương tự</string>
+    <string name="recommended_insecticides">Thuốc trừ sâu được khuyến nghị</string>
     <string name="learn_more">Tìm hiểu thêm</string>
-    <string name="detected_pest_image">Ảnh sâu bệnh phát hiện</string>
+    <string name="detected_pest_image">Hình ảnh sâu hại được phát hiện</string>
     <string name="home">Trang chủ</string>
     <string name="gallery">Thư viện</string>
     <string name="history">Lịch sử</string>
@@ -123,6 +125,108 @@
     <string name="choose_from_device_gallery">Chọn từ thư viện thiết bị</string>
     <string name="take_a_photo">Chụp ảnh</string>
     <string name="choose_from_gallery">Chọn từ thư viện</string>
+    <string name="scientific_name_unavailable">Tên khoa học không có sẵn</string>
+    <string name="description_unavailable">Không có mô tả</string>
+    <string name="date_unavailable">Ngày không có sẵn</string>
+    <string name="filename_unavailable">Tệp không xác định</string>
+    <string name="pest_image">Hình ảnh sâu hại</string>
+    <string name="occurrences_count">Số lần xuất hiện: %d%%</string>
+    <string name="actions">Hành động</string>
+    <string name="remove_result">Xóa kết quả</string>
+    <string name="confidence_90">Độ tin cậy: 90%</string>
+    <string name="image_description">Mô tả hình ảnh</string>
+    <string name="classified_image">Hình ảnh được phân loại</string>
+    <string name="pests">Sâu hại</string>
+    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">Một loại sâu hại lúa chính gây tổn hại đáng kể bằng cách cuộn và ăn lá lúa, dẫn đến giảm quang hợp và mất năng suất.</string>
+    <string name="biological_characteristics">🔬 Đặc điểm sinh học</string>
+    <string name="regions_affected">📍 Khu vực bị ảnh hưởng</string>
+    <string name="view_on_inaturalist">Xem trên iNaturalist</string>
+
+    <string name="login_successful">Đăng nhập thành công!</string>
+    <string name="signup_successful">Đăng ký thành công!</string>
+    <string name="related_pest_image">Hình ảnh sâu hại liên quan</string>
+    <string name="cnaphalocrocis_medinalis">Cnaphalocrocis medinalis</string>
+    <string name="rice_leaf_roller">Sâu cuốn lá lúa</string>
+    <string name="inaturalist">iNaturalist</string>
+    <string name="uit_pest_classification">UIT Phân loại sâu hại</string>
+    <string name="version_1_0">Phiên bản 1.0</string>
+    <string name="app_logo">Logo ứng dụng</string>
+    <string name="confidence_percentage">%d%% tin cậy</string>
+    <string name="unknown_pest">Sâu hại không xác định</string>
+    <string name="no_treatment_info">Không có thông tin điều trị</string>
+    <string name="no_url_available">Không có URL thông tin bổ sung</string>
+    <string name="no_browser_available">Không có ứng dụng trình duyệt</string>
+    <string name="error_opening_url">Lỗi khi mở URL</string>
+    <string name="pest_identification_result">Kết quả nhận dạng sâu hại</string>
+    <string name="error_sharing">Lỗi chia sẻ kết quả</string>
+    <string name="insecticide_icon">Biểu tượng thuốc trừ sâu</string>
+
+    <!-- Share Text Strings -->
+    <string name="share_header">🔍 Kết quả nhận dạng sâu hại</string>
+    <string name="pest_name">Sâu hại</string>
+    <string name="scientific_name">Tên khoa học</string>
+    <string name="confidence">Độ tin cậy</string>
+    <string name="detected_on">Được phát hiện vào</string>
+    <string name="regions">Khu vực</string>
+    <string name="app_signature">Chia sẻ qua ứng dụng phát hiện sâu hại</string>
+    <string name="share_results">Chia sẻ kết quả</string>
+
+    <string name="forgot_password_title">Đặt lại mật khẩu</string>
+    <string name="forgot_password_subtitle">Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn liên kết để đặt lại mật khẩu</string>
+    <string name="send_reset_email">Gửi email đặt lại</string>
+    <string name="contact_support">Liên hệ hỗ trợ</string>
+    <string name="remember_password">Nhớ mật khẩu của bạn?</string>
+    <string name="back_to_login">Đăng nhập</string>
+    <string name="back">Quay lại</string>
+    <string name="reset_email_sent">Email đặt lại đã được gửi thành công! Vui lòng kiểm tra hộp thư của bạn.</string>
+    <string name="reset_email_error">Không thể gửi email đặt lại. Vui lòng thử lại.</string>
+    <string name="report">Báo cáo</string>
+    <string name="reset_email_sent_success">Email đã được gửi thành công!</string>
+    <string name="report_issue">Báo cáo vấn đề</string>
+    <string name="no_scientific_name_available">Không có tên khoa học</string>
+
+    <string name="chip_background">Nền chip</string>
+    <string name="chip_text">Văn bản chip</string>
+
+    <string name="scientific_name_not_available">Tên khoa học không có sẵn</string>
+    <string name="no_description_available">Không có mô tả</string>
+    <string name="unknown_risk">RỦI RO KHÔNG XÁC ĐỊNH</string>
+    <string name="no_regions_specified">Không chỉ định khu vực</string>
+    <string name="no_biological_characteristics_available">Không có đặc điểm sinh học</string>
+    <string name="no_control_methods_available">Không có phương pháp kiểm soát</string>
+    <string name="no_insecticides_specified">Không chỉ định thuốc trừ sâu</string>
+    <string name="unknown">Không xác định</string>
+
+    <string name="risk_high">Rủi ro cao</string>
+    <string name="risk_medium">Rủi ro trung bình</string>
+    <string name="risk_low">Rủi ro thấp</string>
+    <string name="primary_dark">Chính tối</string>
+    <string name="insecticide_background">Nền thuốc trừ sâu</string>
+
+    <string name="regionsText">Khu vực</string>
+    <string name="btnClose">Đóng</string>
+    <string name="btnViewOnINaturalist">Xem trên iNaturalist</string>
+    <string name="btnShare">Chia sẻ</string>
+    <string name="btnReportSighting">Báo cáo phát hiện</string>
+    <string name="btnGetHelp">Nhận trợ giúp</string>
+
+    <!-- Error messages -->
+    <string name="cannot_open_image">Không thể mở hình ảnh</string>
+    <string name="no_browser_available_inaturalist">Không có trình duyệt để mở iNaturalist</string>
+    <string name="failed_to_open_inaturalist">Không thể mở tìm kiếm iNaturalist</string>
+    <string name="no_apps_available_to_share">Không có ứng dụng để chia sẻ</string>
+    <string name="failed_to_share_pest_info">Không thể chia sẻ thông tin sâu hại</string>
+    <string name="reporting_feature_coming_soon">Tính năng báo cáo sắp ra mắt!</string>
+    <string name="help_feature_coming_soon">Tính năng trợ giúp sắp ra mắt!</string>
+
+    <string name="no_internet_connection">Không có kết nối internet</string>
+    <string name="request_timed_out">Yêu cầu hết thời gian chờ. Vui lòng thử lại</string>
+    <string name="pest_info_not_found">Không tìm thấy thông tin sâu hại</string>
+    <string name="server_error">Lỗi máy chủ. Vui lòng thử lại sau</string>
+    <string name="network_error">Lỗi mạng: %s</string>
+    <string name="error_loading_pest_info">Lỗi tải thông tin sâu hại: %s</string>
+    <string name="loading_pest_information">Đang tải thông tin sâu hại...</string>
+    <string name="pest_info_not_found_for">Không tìm thấy thông tin sâu hại cho: %s</string>
 
     <string-array name="theme_entries">
         <item>Mặc định hệ thống</item>

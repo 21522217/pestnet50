@@ -134,7 +134,7 @@
     <string name="actions">Actions</string>
     <string name="remove_result">Remove result</string>
     <string name="confidence_90">Confidence: 90%</string>
-    <string name="image_description">Image Description</string>nt
+    <string name="image_description">Image Description</string>
     <string name="classified_image">Classified image</string>
     <string name="pests">Pests</string>
     <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">A major rice pest that causes significant damage by folding and feeding on rice leaves, leading to reduced photosynthesis and yield loss.</string>
@@ -170,6 +170,63 @@
     <string name="regions">Regions</string>
     <string name="app_signature">Shared via Pest Detection App</string>
     <string name="share_results">Share Results</string>
+
+    <string name="forgot_password_title">Reset Password</string>
+    <string name="forgot_password_subtitle">Enter your email address and we\'ll send you a link to reset your password</string>
+    <string name="send_reset_email">Send Reset Email</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="remember_password">Remember your password?</string>
+    <string name="back_to_login">Sign In</string>
+    <string name="back">Back</string>
+    <string name="reset_email_sent">Reset email sent successfully! Please check your inbox.</string>
+    <string name="reset_email_error">Failed to send reset email. Please try again.</string>
+    <string name="report">Report</string>
+    <string name="reset_email_sent_success">Eamil sent successfully!</string>
+    <string name="report_issue">Report issue</string>
+    <string name="no_scientific_name_available">No scientific name available</string>
+
+    <string name="chip_background">Chip Background</string>
+    <string name="chip_text">Chip Text</string>
+
+    <string name="scientific_name_not_available">Scientific name not available</string>
+    <string name="no_description_available">No description available</string>
+    <string name="unknown_risk">UNKNOWN RISK</string>
+    <string name="no_regions_specified">No regions specified</string>
+    <string name="no_biological_characteristics_available">No biological characteristics available</string>
+    <string name="no_control_methods_available">No control methods available</string>
+    <string name="no_insecticides_specified">No insecticides specified</string>
+    <string name="unknown">Unknown</string>
+
+    <string name="risk_high">High Risk</string>
+    <string name="risk_medium">Medium Risk</string>
+    <string name="risk_low">Low Risk</string>
+    <string name="primary_dark">Primary Dark</string>
+    <string name="insecticide_background">Insecticide Background</string>
+
+    <string name="regionsText">Regions</string>
+    <string name="btnClose">Close</string>
+    <string name="btnViewOnINaturalist">View on iNaturalist</string>
+    <string name="btnShare">Share</string>
+    <string name="btnReportSighting">Report Sighting</string>
+    <string name="btnGetHelp">Get Help</string>
+
+    <!-- Error messages -->
+    <string name="cannot_open_image">Cannot open image</string>
+    <string name="no_browser_available_inaturalist">No browser available to open iNaturalist</string>
+    <string name="failed_to_open_inaturalist">Failed to open iNaturalist search</string>
+    <string name="no_apps_available_to_share">No apps available to share</string>
+    <string name="failed_to_share_pest_info">Failed to share pest information</string>
+    <string name="reporting_feature_coming_soon">Reporting feature coming soon!</string>
+    <string name="help_feature_coming_soon">Help feature coming soon!</string>
+
+    <string name="no_internet_connection">No internet connection available</string>
+    <string name="request_timed_out">Request timed out. Please try again</string>
+    <string name="pest_info_not_found">Pest information not found</string>
+    <string name="server_error">Server error. Please try again later</string>
+    <string name="network_error">Network error: %s</string>
+    <string name="error_loading_pest_info">Error loading pest information: %s</string>
+    <string name="loading_pest_information">Loading pest information...</string>
+    <string name="pest_info_not_found_for">Pest information not found for: %s</string>
 
     <string-array name="theme_entries">
         <item>System default</item>

@@ -13,18 +13,18 @@
     <string name="password_hint">请输入密码…</string>
     <string name="remember_me">记住我</string>
     <string name="forgot_password">忘记密码？</string>
-    <string name="continue_with_google">使用 Google 登录</string>
-    <string name="continue_with_facebook">使用 Facebook 登录</string>
-    <string name="continue_with_others">使用其他方式登录</string>
-    <string name="terms_and_privacy">条款与隐私</string>
+    <string name="continue_with_google">使用Google继续</string>
+    <string name="continue_with_facebook">使用Facebook继续</string>
+    <string name="continue_with_others">使用其他方式继续</string>
+    <string name="terms_and_privacy">条款和隐私</string>
     <string name="copyright">2025©版权所有</string>
     <string name="or">或</string>
     <string name="dontHaveAnAccountPleaseSignup">没有账户？请注册</string>
 
     <string name="signup_title">注册</string>
-    <string name="email">电子邮件</string>
-    <string name="email_hint">请输入您的电子邮件</string>
-    <string name="confirm_password_hint">确认密码</string>
+    <string name="email">邮箱</string>
+    <string name="email_hint">请输入您的邮箱</string>
+    <string name="confirm_password_hint">确认您的密码</string>
     <string name="already_have_account">已有账户？登录</string>
 
     <string name="menu_home">首页</string>
@@ -40,19 +40,19 @@
     <string name="toggle_flash">切换闪光灯</string>
     <string name="take_picture">拍照</string>
     <string name="apply_edit">应用编辑</string>
-    <string name="save_image">保存图像</string>
-    <string name="image_preview">图像预览</string>
-    <string name="dynamic_duo">完美组合</string>
-    <string name="result_will_appear_here">结果将在此处显示</string>
-    <string name="no_images_found">未找到图像</string>
+    <string name="save_image">保存图片</string>
+    <string name="image_preview">图片预览</string>
+    <string name="dynamic_duo">动态双星</string>
+    <string name="result_will_appear_here">结果将显示在这里</string>
+    <string name="no_images_found">未找到图片</string>
     <string name="take_photo">拍照</string>
     <string name="open_gallery">打开图库</string>
-    <string name="pest_occurrences">发现害虫的次数：%d</string>
+    <string name="pest_occurrences">害虫出现次数：%d</string>
 
     <!-- Settings -->
-    <string name="general_settings">通用设置</string>
+    <string name="general_settings">常规设置</string>
     <string name="enable_notifications">启用通知</string>
-    <string name="receive_notifications">接收来自应用的通知</string>
+    <string name="receive_notifications">接收应用通知</string>
     <string name="app_language">应用语言</string>
     <string name="set_language">设置应用语言</string>
 
@@ -61,68 +61,172 @@
         <item>English</item>
         <item>Tiếng Việt</item>
         <item>中文</item>
+        <item>Русский</item>
     </string-array>
     <string-array name="language_values">
         <item>en</item>
         <item>vi</item>
         <item>zh</item>
+        <item>ru</item>
     </string-array>
 
     <!-- About Us -->
     <string name="about_us">关于我们</string>
-    <string name="about_app_title">害虫识别应用简介</string>
-    <string name="about_app_summary">版本：1.0\n公司：XYZ Corp\n开发者：您的名字</string>
-    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">关于我们\n\n应用版本：1.0\n公司：XYZ Corp\n开发者：您的名字</string>
+    <string name="about_app_title">关于害虫分类应用</string>
+    <string name="about_app_summary">版本：1.0\n公司：XYZ Corp\n开发者：您的姓名</string>
+    <string name="about_us_n_napp_version_1_0_ncompany_xyz_corp_ndeveloped_by_your_name">关于我们\n\n应用版本：1.0\n公司：XYZ Corp\n开发者：您的姓名</string>
 
-    <string name="app_theme">应用主题</string>
-    <string name="set_theme">设置应用主题</string>
+    <string name="app_theme">主题</string>
+    <string name="set_theme">选择应用主题</string>
 
     <string name="appearance_settings">外观设置</string>
     <string name="theme_title">主题</string>
-    <string name="theme_summary">设置应用界面主题</string>
-    <string name="most_detected_pests">最常见害虫</string>
+    <string name="theme_summary">设置应用主题</string>
+    <string name="most_detected_pests">最常检测到的害虫</string>
     <string name="view_all">查看全部</string>
     <string name="scan">扫描</string>
     <string name="recent_scans">最近扫描</string>
     <string name="search_for_pests">搜索害虫...</string>
-    <string name="best_accuracy_results">最佳准确率结果</string>
+    <string name="best_accuracy_results">最佳准确度结果</string>
     <string name="share">分享</string>
     <string name="save_report">保存报告</string>
     <string name="failed_to_load_pest_data">加载害虫数据失败</string>
-    <string name="loading_details">正在加载详细信息...</string>
+    <string name="loading_details">正在加载详情...</string>
     <string name="may_11_2024">2024年5月11日</string>
-    <string name="image_information">图像信息</string>
+    <string name="image_information">图片信息</string>
     <string name="also_detected">也检测到</string>
-    <string name="treatment_options">处理方法</string>
-    <string name="_5_occurrences">发现 5 次</string>
-    <string name="spodoptera_frugiperda">秋粘虫</string>
-    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">这种害虫以玉米、棉花和蔬菜等多种作物为食，会通过啃食叶子和钻入果实造成严重破坏。</string>
-    <string name="armyworm">地老虎</string>
-    <string name="_98_confidence">98% 置信度</string>
-    <string name="pest_detection_details">害虫识别详情</string>
+    <string name="treatment_options">治疗选项</string>
+    <string name="_5_occurrences">5次出现</string>
+    <string name="spodoptera_frugiperda">Spodoptera frugiperda</string>
+    <string name="this_pest_feeds_on_various_crops_including_corn_cotton_and_vegetables_it_can_cause_severe_damage_by_defoliating_plants_and_burrowing_into_fruit">这种害虫取食多种作物，包括玉米、棉花和蔬菜。它通过使植物脱叶和钻入果实来造成严重损害。</string>
+    <string name="armyworm">粘虫</string>
+    <string name="_98_confidence">98%置信度</string>
+    <string name="pest_detection_details">害虫检测详情</string>
     <string name="close">关闭</string>
     <string name="close_camera">关闭相机</string>
     <string name="camera_settings">相机设置</string>
-    <string name="flip_camera">切换摄像头</string>
+    <string name="flip_camera">翻转相机</string>
     <string name="detected_pest">检测到的害虫：</string>
     <string name="description">描述：</string>
     <string name="new_scan">新扫描</string>
     <string name="save_result">保存结果</string>
     <string name="search_pests">搜索害虫...</string>
     <string name="similar_pests">相似害虫</string>
-    <string name="recommended_insecticides">推荐的杀虫剂</string>
+    <string name="recommended_insecticides">推荐杀虫剂</string>
     <string name="learn_more">了解更多</string>
-    <string name="detected_pest_image">检测到的害虫图像</string>
+    <string name="detected_pest_image">检测到的害虫图片</string>
     <string name="home">首页</string>
     <string name="gallery">图库</string>
-    <string name="history">历史记录</string>
+    <string name="history">历史</string>
     <string name="settings">设置</string>
     <string name="account">账户</string>
-    <string name="logout">登出</string>
+    <string name="logout">退出</string>
     <string name="search">搜索</string>
     <string name="choose_from_device_gallery">从设备图库选择</string>
     <string name="take_a_photo">拍照</string>
     <string name="choose_from_gallery">从图库选择</string>
+    <string name="scientific_name_unavailable">学名不可用</string>
+    <string name="description_unavailable">无可用描述</string>
+    <string name="date_unavailable">日期不可用</string>
+    <string name="filename_unavailable">未知文件</string>
+    <string name="pest_image">害虫图片</string>
+    <string name="occurrences_count">出现次数：%d%%</string>
+    <string name="actions">操作</string>
+    <string name="remove_result">删除结果</string>
+    <string name="confidence_90">置信度：90%</string>
+    <string name="image_description">图片描述</string>
+    <string name="classified_image">分类图片</string>
+    <string name="pests">害虫</string>
+    <string name="a_major_rice_pest_that_causes_significant_damage_by_folding_and_feeding_on_rice_leaves_leading_to_reduced_photosynthesis_and_yield_loss">一种主要的水稻害虫，通过卷曲和取食水稻叶片造成严重损害，导致光合作用减少和产量损失。</string>
+    <string name="biological_characteristics">🔬 生物学特征</string>
+    <string name="regions_affected">📍 受影响地区</string>
+    <string name="view_on_inaturalist">在iNaturalist上查看</string>
+
+    <string name="login_successful">登录成功！</string>
+    <string name="signup_successful">注册成功！</string>
+    <string name="related_pest_image">相关害虫图片</string>
+    <string name="cnaphalocrocis_medinalis">Cnaphalocrocis medinalis</string>
+    <string name="rice_leaf_roller">稻纵卷叶螟</string>
+    <string name="inaturalist">iNaturalist</string>
+    <string name="uit_pest_classification">UIT害虫分类</string>
+    <string name="version_1_0">版本1.0</string>
+    <string name="app_logo">应用标志</string>
+    <string name="confidence_percentage">%d%%置信度</string>
+    <string name="unknown_pest">未知害虫</string>
+    <string name="no_treatment_info">无可用治疗信息</string>
+    <string name="no_url_available">无可用附加信息链接</string>
+    <string name="no_browser_available">没有可用的浏览器应用</string>
+    <string name="error_opening_url">打开链接出错</string>
+    <string name="pest_identification_result">害虫识别结果</string>
+    <string name="error_sharing">分享结果出错</string>
+    <string name="insecticide_icon">杀虫剂图标</string>
+
+    <!-- Share Text Strings -->
+    <string name="share_header">🔍 害虫识别结果</string>
+    <string name="pest_name">害虫</string>
+    <string name="scientific_name">学名</string>
+    <string name="confidence">置信度</string>
+    <string name="detected_on">检测时间</string>
+    <string name="regions">地区</string>
+    <string name="app_signature">通过害虫检测应用分享</string>
+    <string name="share_results">分享结果</string>
+
+    <string name="forgot_password_title">重置密码</string>
+    <string name="forgot_password_subtitle">输入您的邮箱地址，我们将向您发送重置密码的链接</string>
+    <string name="send_reset_email">发送重置邮件</string>
+    <string name="contact_support">联系支持</string>
+    <string name="remember_password">记得您的密码？</string>
+    <string name="back_to_login">登录</string>
+    <string name="back">返回</string>
+    <string name="reset_email_sent">重置邮件发送成功！请检查您的收件箱。</string>
+    <string name="reset_email_error">发送重置邮件失败。请重试。</string>
+    <string name="report">报告</string>
+    <string name="reset_email_sent_success">邮件发送成功！</string>
+    <string name="report_issue">报告问题</string>
+    <string name="no_scientific_name_available">无可用学名</string>
+
+    <string name="chip_background">芯片背景</string>
+    <string name="chip_text">芯片文本</string>
+
+    <string name="scientific_name_not_available">学名不可用</string>
+    <string name="no_description_available">无可用描述</string>
+    <string name="unknown_risk">未知风险</string>
+    <string name="no_regions_specified">未指定地区</string>
+    <string name="no_biological_characteristics_available">无可用生物学特征</string>
+    <string name="no_control_methods_available">无可用防治方法</string>
+    <string name="no_insecticides_specified">未指定杀虫剂</string>
+    <string name="unknown">未知</string>
+
+    <string name="risk_high">高风险</string>
+    <string name="risk_medium">中等风险</string>
+    <string name="risk_low">低风险</string>
+    <string name="primary_dark">主要深色</string>
+    <string name="insecticide_background">杀虫剂背景</string>
+
+    <string name="regionsText">地区</string>
+    <string name="btnClose">关闭</string>
+    <string name="btnViewOnINaturalist">在iNaturalist上查看</string>
+    <string name="btnShare">分享</string>
+    <string name="btnReportSighting">报告发现</string>
+    <string name="btnGetHelp">获取帮助</string>
+
+    <!-- Error messages -->
+    <string name="cannot_open_image">无法打开图片</string>
+    <string name="no_browser_available_inaturalist">没有可用的浏览器打开iNaturalist</string>
+    <string name="failed_to_open_inaturalist">打开iNaturalist搜索失败</string>
+    <string name="no_apps_available_to_share">没有可用于分享的应用</string>
+    <string name="failed_to_share_pest_info">分享害虫信息失败</string>
+    <string name="reporting_feature_coming_soon">报告功能即将推出！</string>
+    <string name="help_feature_coming_soon">帮助功能即将推出！</string>
+
+    <string name="no_internet_connection">无网络连接</string>
+    <string name="request_timed_out">请求超时。请重试</string>
+    <string name="pest_info_not_found">未找到害虫信息</string>
+    <string name="server_error">服务器错误。请稍后重试</string>
+    <string name="network_error">网络错误：%s</string>
+    <string name="error_loading_pest_info">加载害虫信息出错：%s</string>
+    <string name="loading_pest_information">正在加载害虫信息...</string>
+    <string name="pest_info_not_found_for">未找到害虫信息：%s</string>
 
     <string-array name="theme_entries">
         <item>系统默认</item>

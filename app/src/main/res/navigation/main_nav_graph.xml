@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.vn.uit.ui.home.HomeFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_cameraFragment"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.vn.uit.ui.home.CameraFragment"
-        android:label="Camera"
+        android:label="@string/camera_settings"
         tools:layout="@layout/fragment_camera">
         <action
             android:id="@+id/action_cameraFragment_to_imageEditorFragment"
@@ -47,25 +47,25 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.vn.uit.ui.home.ResultFragment"
-        android:label="Results"
+        android:label="@string/share_results"
         tools:layout="@layout/fragment_result">
+
+        <argument
+            android:name="result"
+            app:argType="com.vn.uit.model.ClassificationResponse" />
+
         <action
             android:id="@+id/action_resultFragment_to_nav_home"
             app:destination="@id/nav_home"
             app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
-
-        <argument
-            android:name="result"
-            app:argType="com.vn.uit.model.ClassificationResponse"
-            />
     </fragment>
 
     <!-- Gallery Screen -->
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.vn.uit.ui.gallery.GalleryFragment"
-        android:label="Gallery"
+        android:label="@string/gallery"
         tools:layout="@layout/fragment_gallery">
         <action
             android:id="@+id/action_galleryFragment_to_imageEditorFragment"
@@ -76,7 +76,7 @@
     <fragment
         android:id="@+id/nav_pests"
         android:name="com.vn.uit.ui.pests.PestsFragment"
-        android:label="Pests"
+        android:label="@string/pests"
         tools:layout="@layout/fragment_pests_view">
     </fragment>
 
@@ -92,7 +92,7 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.vn.uit.ui.gallery.GalleryFragment"
-        android:label="Gallery"
+        android:label="@string/gallery"
         tools:layout="@layout/fragment_gallery">
         <action
             android:id="@+id/action_galleryFragment_to_imageEditorFragment"
@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/nav_history"
         android:name="com.vn.uit.ui.history.HistoryFragment"
-        android:label="History"
+        android:label="@string/history"
         tools:layout="@layout/fragment_history">
     </fragment>
 </navigation>

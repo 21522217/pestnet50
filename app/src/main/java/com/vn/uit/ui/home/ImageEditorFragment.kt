@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.vn.uit.R
 import com.vn.uit.databinding.FragmentImageEditorBinding
 import com.vn.uit.viewmodel.PestClassificationViewModel
 
@@ -26,9 +27,11 @@ class ImageEditorFragment : Fragment() {
             }
             is PestClassificationViewModel.ClassificationState.Success -> {
                 binding.progressBar.visibility = View.GONE
-                val action = ImageEditorFragmentDirections
-                    .actionImageEditorFragmentToResultFragment(state.result)
-                findNavController().navigate(action)
+                // Add null check for the result
+                state.result?.let { result ->
+                    val action = ImageEditorFragmentDirections.actionImageEditorFragmentToResultFragment(result)
+                    findNavController().navigate(action)
+                }
             }
             is PestClassificationViewModel.ClassificationState.Error -> {
                 binding.progressBar.visibility = View.GONE
@@ -54,7 +57,7 @@ class ImageEditorFragment : Fragment() {
             if (bitmap != null) {
                 binding.imageCropper.setImageBitmap(bitmap)
             } else {
-                Toast.makeText(requireContext(), "No image available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.no_images_found, Toast.LENGTH_SHORT).show()
                 findNavController().navigateUp()
             }
         }
@@ -65,7 +68,7 @@ class ImageEditorFragment : Fragment() {
                 viewModel.setProcessedImage(croppedBitmap)
                 classifyImage(croppedBitmap)
             } else {
-                Toast.makeText(requireContext(), "Failed to crop image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.failed_to_open_inaturalist, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -77,12 +80,16 @@ class ImageEditorFragment : Fragment() {
 
     private fun classifyImage(croppedBitmap: Bitmap) {
         binding.progressBar.visibility = View.VISIBLE
+        // Remove the previous observer before adding a new one to avoid multiple observers
+        viewModel.classificationState.removeObserver(classificationObserver)
         viewModel.classificationState.observe(viewLifecycleOwner, classificationObserver)
         viewModel.classifyImage(croppedBitmap)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Clean up observer
+        viewModel.classificationState.removeObserver(classificationObserver)
         _binding = null
     }
 }

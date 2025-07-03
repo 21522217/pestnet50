@@ -145,16 +145,17 @@ class ClassificationDetailDialogFragment(
                     imageUrl = it,
                     confidence = 0f,
                     modelName = "",
-                    classifiedAt = classification.classifiedAt,
-                    pestId = classification.pestId,
-                    pestName = "",
-                    pestRegions = null,
-                    pestScientificName = "",
-                    pestDescription = null,
-                    pestUrl = null,
-                    pestInsecticide = null
+                    classifiedAt = classification.classifiedAt ?: "",
+                    pestId = classification.pestId ?: "",
+                    pestName = classification.pestName ?: "",
+                    pestRegions = classification.pestRegions ?: emptyList(),
+                    pestScientificName = classification.pestScientificName ?: "",
+                    pestDescription = classification.pestDescription ?: "",
+                    pestUrl = classification.pestUrl ?: "",
+                    pestInsecticide = classification.pestInsecticide ?: emptyList()
                 )
             }
+
             val adapter = ClassificationAdapter(relatedClassifications) {
                 Toast.makeText(requireContext(), "Clicked related image", Toast.LENGTH_SHORT).show()
             }

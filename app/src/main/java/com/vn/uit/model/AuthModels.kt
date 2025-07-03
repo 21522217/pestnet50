@@ -1,5 +1,8 @@
 package com.vn.uit.model
 
+import com.google.gson.annotations.SerializedName
+import java.util.UUID
+
 data class AuthRequest(val email: String, val password: String)
 
 data class AuthResponse(
@@ -25,4 +28,24 @@ data class SignupRequest(
 data class SignupResponse(
     val status: Int,
     val message: String,
+)
+
+data class ForgotPasswordRequest(
+    val token: String,
+    @SerializedName("email")
+    val email: String
+)
+
+data class ForgotPasswordResponse(
+    @SerializedName("status")
+    val status: Int,
+    @SerializedName("message")
+    val message: String?,
+    @SerializedName("success")
+    val success: Boolean? = null
+)
+
+data class ReportApplicationRequest(
+    val userId: UUID,
+    val message: String
 )

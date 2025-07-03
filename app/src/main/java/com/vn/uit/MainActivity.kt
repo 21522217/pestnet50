@@ -2,7 +2,6 @@ package com.vn.uit
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -24,11 +23,14 @@ class MainActivity : BaseActivity() {
     private lateinit var userPrefs: UserPreferences
     private lateinit var appBarConfig: AppBarConfiguration
     private lateinit var nav: NavController
+    private lateinit var fabReport: View
     private var currentGraphId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        fabReport = binding.fabReport
+
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
@@ -60,7 +62,9 @@ class MainActivity : BaseActivity() {
 
         if (currentGraphId != graphRes) {
             currentGraphId = graphRes
-            nav.graph = nav.navInflater.inflate(graphRes)
+            val graph = nav.navInflater.inflate(graphRes)
+            graph.setStartDestination(graph.startDestinationId)
+            nav.setGraph(graph, null)
             configureUI(graphRes)
         }
     }
@@ -77,7 +81,9 @@ class MainActivity : BaseActivity() {
                 if (currentGraphId != graphRes) {
                     try {
                         currentGraphId = graphRes
-                        nav.graph = nav.navInflater.inflate(graphRes)
+                        val graph = nav.navInflater.inflate(graphRes)
+                        graph.setStartDestination(graph.startDestinationId)
+                        nav.setGraph(graph, null)
                         configureUI(graphRes)
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -90,39 +96,43 @@ class MainActivity : BaseActivity() {
 
     private fun setupDestinationChangeListener() {
         nav.addOnDestinationChangedListener { _, dest, _ ->
-            // Define screens that need special handling
             val cameraScreens = setOf(
                 R.id.cameraFragment, R.id.imageEditorFragment, R.id.resultFragment
             )
 
             val isCameraScreen = dest.id in cameraScreens
+            val isAuthScreen = dest.id == R.id.auth_nav_graph
+            val isHistoryScreen = dest.id == R.id.nav_history
 
-            // Handle camera screens special UI treatment
             if (isCameraScreen) {
-                // Apply camera theme for full immersive experience
                 setTheme(R.style.Theme_PestClassification_Camera)
-
-                // Hide app bar for camera screens
                 binding.appBarLayout.isVisible = false
 
-                // Set immersive mode for camera screens
                 window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
                         or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         or View.SYSTEM_UI_FLAG_FULLSCREEN)
+
+                binding.fabReport.visibility = View.GONE
+
             } else {
-                // For non-camera screens, restore normal UI visibility
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
 
-                // Show app bar for non-camera screens in main flow
                 if (currentGraphId == R.navigation.main_nav_graph) {
                     binding.appBarLayout.isVisible = true
+                }
+
+                binding.fabReport.visibility = if (isAuthScreen || isHistoryScreen) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
                 }
             }
         }
     }
+
 
     private fun configureUI(graphRes: Int) {
         if (graphRes == R.navigation.main_nav_graph) {

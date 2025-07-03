@@ -53,12 +53,14 @@ class CameraFragment : Fragment() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            requestCameraPermission()
-        }
+        // Setup click listeners first
+        setupClickListeners()
 
+        // Check permissions and start camera
+        checkPermissionsAndStartCamera()
+    }
+
+    private fun setupClickListeners() {
         binding.captureButton.setOnClickListener {
             takePhoto()
         }
@@ -67,13 +69,21 @@ class CameraFragment : Fragment() {
             toggleFlash()
         }
 
-        binding.closeButton.setOnClickListener() {
+        binding.closeButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
         binding.galleryButton.setOnClickListener {
             viewModel.resetClassification()
             findNavController().navigate(R.id.action_cameraFragment_to_galleryFragment)
+        }
+    }
+
+    private fun checkPermissionsAndStartCamera() {
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            requestCameraPermission()
         }
     }
 
@@ -100,10 +110,23 @@ class CameraFragment : Fragment() {
     }
 
     private fun startCamera() {
+        // Add a small delay to ensure the view is fully ready
+        binding.previewView.post {
+            initializeCamera()
+        }
+    }
+
+    private fun initializeCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
             try {
+                // Check if fragment is still attached
+                if (!isAdded) {
+                    Log.w(TAG, "Fragment not attached, skipping camera initialization")
+                    return@addListener
+                }
+
                 val cameraProvider = cameraProviderFuture.get()
 
                 val preview = Preview.Builder().build().also {
@@ -116,7 +139,10 @@ class CameraFragment : Fragment() {
 
                 val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+                // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
+
+                // Bind use cases to camera
                 camera = cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, preview, imageCapture
                 )
@@ -125,6 +151,8 @@ class CameraFragment : Fragment() {
                 camera?.cameraInfo?.hasFlashUnit()?.let { hasFlash ->
                     binding.flashButton.visibility = if (hasFlash) View.VISIBLE else View.GONE
                 }
+
+                Log.d(TAG, "Camera initialized successfully")
 
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -193,20 +221,39 @@ class CameraFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCamera()
+                Log.d(TAG, "Camera permission granted, starting camera")
+                // Add a delay to ensure the permission dialog is fully dismissed
+                binding.previewView.postDelayed({
+                    if (isAdded && _binding != null) {
+                        startCamera()
+                    }
+                }, 100)
             } else {
+                Log.w(TAG, "Camera permission denied")
                 Toast.makeText(requireContext(), "Camera permission is required to use the camera", Toast.LENGTH_LONG).show()
                 // Consider navigating back or to another fragment that doesn't require camera
+                findNavController().popBackStack()
             }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Restart camera if permission was granted while fragment was paused
+        if (allPermissionsGranted() && camera == null && _binding != null) {
+            Log.d(TAG, "onResume: restarting camera")
+            startCamera()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        camera = null
+        imageCapture = null
         _binding = null
         cameraExecutor.shutdown()
     }

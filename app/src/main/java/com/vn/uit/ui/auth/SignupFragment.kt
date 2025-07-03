@@ -66,7 +66,8 @@ class SignupFragment : Fragment() {
         }
 
         binding.loginTextView.setOnClickListener {
-            findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
+            val action = SignupFragmentDirections.actionSignupFragmentToLoginFragment()
+            findNavController().navigate(action)
         }
 
         binding.termsTextView.setOnClickListener {
@@ -147,8 +148,10 @@ class SignupFragment : Fragment() {
                 if (!isAdded) return@launch
 
                 if (response.status == 200) {
+                    clearFields()
                     safeShowToast(getString(R.string.signup_successful))
-                    findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
+                    val action = SignupFragmentDirections.actionSignupFragmentToLoginFragment()
+                    findNavController().navigate(action)
                 } else {
                     response.message?.let { safeShowToast(it) }
                 }
@@ -265,6 +268,13 @@ class SignupFragment : Fragment() {
             }
             false
         }
+    }
+
+    private fun clearFields() {
+        binding.emailEditText.text?.clear()
+        binding.usernameEditText.text?.clear()
+        binding.passwordEditText.text?.clear()
+        binding.confirmPasswordEditText.text?.clear()
     }
 
     override fun onDestroyView() {
